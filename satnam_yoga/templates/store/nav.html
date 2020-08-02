@@ -1,0 +1,26 @@
+{% load static %}
+<nav>
+  <div class="nav_signals">
+      <figure class="logo">
+        <img id="logo"src="{% static "img/logo.jpg" %}" alt="">
+        <img src="{% static "img/pasion_con_abundancia.png" %}" alt="">
+      </figure>
+
+      <div class="topnav">
+
+        <input id="Search_bar" type="text" placeholder="Search.." name="" value="" >
+        <button type="submit" onclick="search_open()" ><i class="fa fa-search"></i></button>
+
+
+      </div>
+
+  </div>
+  <div class="nav_submenu">
+    <ul class="nav_submenu_list">
+        <li>Back</li>
+      <li>Home</li>
+    </ul>
+
+    <h5><a href="">Cuenta</a></h5>
+  </div>
+</nav>

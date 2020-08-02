@@ -1,0 +1,22 @@
+{% load static %}
+<nav class="navbar  sticky-top" id="main-navbar">
+    <figure>
+      <img src="{% static "img/logo.jpg" %}" alt="">
+    </figure>
+
+    <ul id="nav-menu" class="nav_menu mr-auto">
+      <li><a href="">Dashboard</a></li>
+      <li><a href="">Tienda</a></li>
+    </ul>
+
+    <div id="nav-user" class="navbar-user ml-auto">
+      <img src="{% static "img/default-profile.png" %}" alt="">
+
+      <a href=""><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+
+    <a id="icon" href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+    
+</nav>
