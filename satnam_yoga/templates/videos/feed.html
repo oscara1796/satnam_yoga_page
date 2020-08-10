@@ -1,4 +1,7 @@
+
 {% extends "base.html" %}
+<!-- {% load static %} -->
+
 
 
 {% block head_content %}
@@ -6,12 +9,38 @@
 {% endblock %}
 
 {% block container %}
-  <div class="container">
 
-    <div class="row">
-      <h1>Hello</h1>
 
+  <div class="slideshow-container ">
+
+    <div class="mySlides  fade_effect">
+      <img src="{% static "img/portada_feed.jpg" %}" alt="">
+      <div class="text">Tu escuela de yoga kundalini</div>
     </div>
 
+    <div class="mySlides fade_effect">
+      <img src="{% static "img/portada_feed_3.jpg" %}" alt="">
+      <div class="text">Prueba 2</div>
+    </div>
+
+    <div class="mySlides fade_effect">
+      <img src="{% static "img/portada_feed_4.jpg" %}" alt="">
+      <div class="text">Prueba 3</div>
+    </div>
+
+    <!-- <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
+
   </div>
+
+  <div class="container">
+
+      <div class="d-flex flex-column align-items-center mt-3 mb-3">
+        <h1>¿Qué es satnam Yoga?</h1>
+
+        <button type="button" name="button">Ver video </button>
+      </div>
+
+  </div>
+
 {% endblock %}
