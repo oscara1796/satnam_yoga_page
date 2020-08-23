@@ -9,5 +9,4 @@ from django.shortcuts import render, redirect
 
 @login_required
 def list_menu(request):
-
     return render(request, 'videos/feed.html')

@@ -6,6 +6,13 @@ body{
 
 }
 
+/* General atributes */
+
+.especial_text{
+  color:#2a99fa;
+  font-weight:bold;
+}
+
 /* Navbar */
 
 .navbar{
@@ -197,4 +204,104 @@ body{
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
+}
+
+/* PORTADA HATHA  */
+
+.portada{
+  font-size: 20px;
+  display: flex;
+}
+
+.portada img{
+  padding: 15px;
+  object-fit: cover;
+  border: 1px solid gray;
+  box-shadow: -2px 3px 5px gray;
+  margin-left: 5px;
+}
+
+/* MEMBESHIP SECTION  */
+.membership{
+  background-color: #194582;
+  color: white;
+  height: 70vh;
+}
+
+.card_container{
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.memebership_cards{
+  width: 25%;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  padding: 10px;
+  text-align: center;
+}
+
+.membership_text{
+  font-size: 20px;
+}
+
+.membership_cost{
+  color: #2a99fa;
+  font-size: 40px;
+  margin: 0;
+}
+
+.memebership_cards button{
+  border-radius: 10px;
+  background-color: #1aad35;
+  padding: 5px;
+  border: none;
+}
+
+.memebership_cards button a{
+  text-decoration: none;
+  color: white;
+
+}
+
+
+/* ONLINE CLASES */
+
+.online_clases{
+  background-image: linear-gradient(to right, rgba(44, 80, 199, 1.0), rgba(0, 0, 0, 0)), url('../img/online_clasess.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 70vh;
+  background-position: 50% 70%;
+  padding: 10px;
+  padding-left: 20px;
+  color: white;
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+.online_clases button{
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+
+/* BENEFICIOS DEL YOGA */
+.beneficios_yoga{
+  text-align: center;
+}
+
+.benefits_cards img{
+  width: 50%
+}
+
+.benefits_cards{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  grid-template-areas: ""
 }
