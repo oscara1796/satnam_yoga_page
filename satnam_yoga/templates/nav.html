@@ -10,14 +10,22 @@
       <li><a href="{% url "store" %}">Tienda</a></li>
     </ul>
 
-    <div id="nav-user" class="navbar-user ml-auto">
-      <img src="{% static "img/default-profile.png" %}" alt="">
+    {% if request.user.is_authenticated %}
+      <div id="nav-user" class="navbar-user ml-auto">
+        <img src="{% static "img/default-profile.png" %}" alt="">
 
-      <a href=""><i class="fas fa-sign-out-alt"></i></a>
-    </div>
+        <a href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i></a>
+      </div>
 
-    <a id="icon" href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
+      <a id="icon" href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    {% else %}
+      <div class="user_not_authenticated">
+        <a class="mr-2" href="{% url "login" %}">Ingresa </a>
+        <p>/</p>
+        <a class="ml-2"href="{% url "signup" %}"> Registrate</a>
+      </div>
+    {% endif %}
 
 </nav>

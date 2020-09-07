@@ -7,6 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from users.models import Profile
 from django.contrib.auth.models import User
 
+# Forms
+from users.forms import SignupForm
+
 
 
 
@@ -23,3 +26,33 @@ def login_view(request):
             return render(request, 'users/login.html',{'error': 'Invalid username and password'})
 
     return render(request, 'users/login.html')
+
+
+def logout_view(request):
+    
+    logout(request)
+    
+    return redirect('login')
+
+
+
+def signup_view(request):
+     """Sign up view"""
+     if request.method == 'POST':
+         form = SignupForm(request.POST)
+         if form.is_valid():
+             form.save()
+             return redirect('login')
+     else:
+         form = SignupForm()
+
+     return render(
+         request=request,
+         template_name= 'users/signup.html',
+         context={'form':form}
+     )
+        
+        
+    
+        
+        

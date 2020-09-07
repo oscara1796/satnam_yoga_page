@@ -11,6 +11,8 @@ class Profile(models.Model):
     image = models.ImageField(upload_to="user_images/");
 
     phone_number = models.CharField(max_length=20, blank=True);
+    
+    
 
     created = models.DateTimeField(auto_now_add= True);
     modified = models.DateTimeField(auto_now= True);

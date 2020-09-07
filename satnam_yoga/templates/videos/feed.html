@@ -107,83 +107,96 @@
      <button type="button" name="button">ÚNETE AHORA</button>
    </section>
 
-   <section>
-     <h2>Clases completas de kundalini Yoga</h2>
+   <section class="class_benefition_cards mb-4">
+     <h2 class="text-center mt-3 ">Clases completas de kundalini Yoga</h2>
 
-     <div class="card_container">
-        <div class="page_contain_card">
-          <img src="" alt="">
-          <p>Kriya / series</p>
+     <div class="card_container ">
+        <div class=" yoga_class_content">
+          <img src="{% static "img/om.png" %}" alt="">
+          <p class="clases_card_title">Kriya / series</p>
           <p>Ejercicios físicos y mentales, equilibria tu cuerpo, tu mente y alma.</p>
         </div>
-        <div class="page_contain_card">
-          <img src="" alt="">
-          <p>Meditación</p>
+        <div class=" yoga_class_content">
+          <img src="{% static "img/mind_yoga.png" %}" alt="">
+          <p class="clases_card_title">Meditación</p>
           <p>Purifica tu mente, elimina la basura mental y conócete a ti  mismo.</p>
         </div>
-        <div class="page_contain_card">
-          <img src="" alt="">
-          <p>Respiración / Pranayama</p>
+        <div class=" yoga_class_content">
+          <img src="{% static "img/breathe.png" %}" alt="">
+          <p class="clases_card_title">Respiración / Pranayama</p>
           <p>Revitaliza tu energía, regenera tu cuerpo e integra nuevos y mejores hábitos.</p>
         </div>
      </div>
    </section>
 
    <section class="beneficios_yoga">
-     <h1>Beneficios del kundalini yoga</h1>
-     <div class="benefits_cards">
-       <img src="{% static "img/beneficios_satnam.png" %}" alt="">
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+     <h1 class="mb-3">Beneficios del kundalini yoga</h1>
+     <div class="benefits_cards benefit_cards_des mt-3">
+       <div class="benefit_card_item">
+         <img src="{% static "img/cerebro.png" %}" alt="">
+         <h3>Fortalece</h3>
+         <p>Tu sistema nervioso</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/sangre.png" %}" alt="">
+         <h3>Activa </h3>
+         <p>Tu circulación</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/ley.png" %}" alt="">
+         <h3>Equilibra</h3>
+         <p>Tu sistema gandular</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/brillar.png" %}" alt="">
+         <h3>Desintoxica</h3>
+         <p>Tu cuerpo</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+
+       <div class="benefit_card_item benefit_card_center">
+        <img  src="{% static "img/beneficios_satnam.png" %}" alt="">
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       
+
+       <div class="benefit_card_item">
+         <img src="{% static "img/fuerte.png" %}" alt="">
+         <h3>Fortalece</h3>
+         <p>Tus músculos</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/immune_system.png" %}" alt="">
+         <h3>Fortalece</h3>
+         <p>Tu sistema inmunológico</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/yoga_icon.png" %}" alt="">
+         <h3>Libera</h3>
+         <p>el estrés</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/digestion.png" %}" alt="">
+         <h3>Mejora</h3>
+         <p>Tu digestión</p>
        </div>
-       <div>
-         <img src="" alt="">
-         <h3></h3>
-         <p></p>
+       <div class="benefit_card_item">
+         <img src="{% static "img/sueno.png" %}" alt="">
+         <h3>Mejora</h3>
+         <p>tu calidad de sueño</p>
+       </div>
+       <div class="benefit_card_item">
+         <img src="{% static "img/relief.png" %}" alt="">
+         <h3>Alivia</h3>
+         <p>la depresión  y ansiedad</p>
        </div>
      </div>
+   </section>
+
+   <section id="tomar_una_clase">
+     <div>
+      <h3>¿Estás listo para empezar?</h3>
+      <p>Empieza a encontrate a ti mismo. <br> Un camino hacia el bienestar.</p>
+     </div>
+     <button><a href="">TOMAR UNA CLASE</a></button>
    </section>
 
 {% endblock %}

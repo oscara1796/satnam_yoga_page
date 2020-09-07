@@ -65,6 +65,11 @@ body{
   color: #04107a
 }
 
+.user_not_authenticated{
+  display: flex;
+  justify-content: space-between;
+}
+
 @media only screen and (max-width: 768px) {
   .nav_menu li a {
     display: none;
@@ -235,6 +240,8 @@ body{
 
 }
 
+
+
 .memebership_cards{
   width: 25%;
   background-color: white;
@@ -289,19 +296,108 @@ body{
   padding: 10px;
 }
 
+/* CLASES DE YOGA COMPLETAS */
+
+.class_benefition_cards{
+
+}
+
+.yoga_class_content{
+  border: 1px solid #AARRGGBB;
+  margin: 0px 10px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px  8px #161515;
+  height: 40vh;
+  width: 25vw;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yoga_class_content .clases_card_title{
+  text-align: center;
+  color: #2a99fa;
+  font-weight: 400;
+}
+
+.yoga_class_content img{
+  height: 15vh;
+  width: 10vw;
+  
+}
+
+@media only screen and (max-width: 768px) {
+
+
+}
+
 
 /* BENEFICIOS DEL YOGA */
 .beneficios_yoga{
   text-align: center;
 }
 
-.benefits_cards img{
-  width: 50%
-}
 
 .benefits_cards{
   display: flex;
   justify-content: center;
   position: relative;
-  grid-template-areas: ""
+}
+
+
+.benefit_cards_des{
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 10px;
+}
+
+.benefit_card_item img{
+  width: 50px;
+}
+
+.benefit_card_center img{
+  width: 20vw;
+  height: 60vh;
+}
+
+.benefit_card_item{
+  /* border: 1px solid red; */
+}
+
+.benefit_card_item:nth-of-type(1){
+  grid-column: 1/ span 3;
+}
+
+.benefit_card_item:nth-of-type(5){
+  grid-row: 2 / span 3;
+  grid-column: 2 / 3;
+  display: flex;
+  align-items: center;
+}
+
+
+/* TOMAR CLASES  */
+
+#tomar_una_clase{
+  background: #37393d;
+  color: white;
+  padding: 3%;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#tomar_una_clase button{
+  /* height: 30px; */
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#tomar_una_clase a{
+  text-decoration: none;
+  color: #2a99fa;
 }

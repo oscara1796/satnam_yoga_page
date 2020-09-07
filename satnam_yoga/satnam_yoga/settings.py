@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     #Local apps:
     'users',
     'videos',
+    'posts',
 ]
 
 MIDDLEWARE = [

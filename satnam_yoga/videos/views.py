@@ -7,6 +7,6 @@ from django.shortcuts import render, redirect
 # Create your views here.
 
 
-@login_required
+
 def list_menu(request):
     return render(request, 'videos/feed.html')
