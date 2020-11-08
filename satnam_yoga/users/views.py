@@ -29,9 +29,9 @@ def login_view(request):
 
 
 def logout_view(request):
-    
+
     logout(request)
-    
+
     return redirect('login')
 
 
@@ -51,8 +51,3 @@ def signup_view(request):
          template_name= 'users/signup.html',
          context={'form':form}
      )
-        
-        
-    
-        
-        

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_content %}
+  <title>Satnam videos</title>
+  <!-- #IMPORT The Ajaxso no-one can save the video with right click -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}
+
+
+{% block container %}
+
+<section class="container-fluid video-list-container">
+
+  <div class="video_container">
+    {% include "videos/video_card.html" %}
+  </div>
+
+  <div class="video_list_menu">
+
+    {% for video in video_content %}
+        <ul>
+          <li><a href="">{{video.title}}</a></li>
+        </ul>
+    {% endfor %}
+  </div>
+</section>
+
+
+{% endblock %}

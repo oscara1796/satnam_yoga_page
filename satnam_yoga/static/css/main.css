@@ -19,6 +19,7 @@ body{
   display: flex;
   position: fixed;
   z-index: 1;
+  background-color: white;
 }
 
 .nav_menu{
@@ -128,7 +129,6 @@ body{
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   width: 100%;
   height: 20vh;
 }
@@ -325,7 +325,7 @@ body{
 .yoga_class_content img{
   height: 15vh;
   width: 10vw;
-  
+
 }
 
 @media only screen and (max-width: 768px) {
@@ -400,4 +400,38 @@ body{
 #tomar_una_clase a{
   text-decoration: none;
   color: #2a99fa;
+}
+
+
+/* video_list */
+
+.video-list-container{
+  display: flex;
+  justify-content: space-around;
+  height: 59vh;
+}
+
+.video_container{
+  text-align: center;
+}
+
+.video_container video{
+  width: 50vw;
+  margin: 15px 0px;
+}
+
+.video_list_img_container {
+  position: relative;
+  text-align: center;
+  color: white;
+  font-weight: 20px;
+  font-weight: bold;
+  width: 40%;
+}
+
+.videos_list_center_text {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
