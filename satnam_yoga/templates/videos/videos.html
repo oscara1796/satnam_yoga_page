@@ -20,7 +20,7 @@
 
     {% for video in video_content %}
         <ul>
-          <li><a href="">{{video.title}}</a></li>
+          <li><a href="{% url "video_id_show" video.id %}">{{video.title}}</a></li>
         </ul>
     {% endfor %}
   </div>

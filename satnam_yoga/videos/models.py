@@ -9,10 +9,11 @@ class Video(models.Model):
 
     image = models.ImageField(upload_to="user_images/");
     upload = models.FileField(upload_to='video_uploads/', default='default_value')
+    description = models.TextField(blank= True, default= None )
 
     created = models.DateTimeField(auto_now_add= True);
     modified = models.DateTimeField(auto_now= True);
 
     def __str__(self):
-        """return user name!"""
+        """return video name!"""
         return self.title

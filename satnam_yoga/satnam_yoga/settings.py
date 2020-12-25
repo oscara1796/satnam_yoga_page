@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'videos',
     'posts',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,8 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51Hy78jJQ5QjlwW1LlMZylr7CmJh4I4EEt7kaBBXRgnSSRTKjVXPVIzcAz5UcCecrMCQulDqbCtiffR5BbotMLm3Z00ZgMyRVhh'
+STRIPE_SECRET_KEY = 'sk_test_51Hy78jJQ5QjlwW1LvaXVjvRE0YteDPEkqhIUPop91IYye5SPKedAXlUQhsy7SBtW6UqfFDoQ1rjQfb2bNOFqIaRp005Ur0AZsm'
+STRIPE_ENDPOINT_SECRET  = 'whsec_hLynjuTrDlemhunB8gR8GSizdARAqZCu'

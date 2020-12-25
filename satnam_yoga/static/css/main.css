@@ -224,6 +224,7 @@ body{
   border: 1px solid gray;
   box-shadow: -2px 3px 5px gray;
   margin-left: 5px;
+  width: 50%;
 }
 
 /* MEMBESHIP SECTION  */
@@ -408,11 +409,16 @@ body{
 .video-list-container{
   display: flex;
   justify-content: space-around;
-  height: 59vh;
+  /* height: 70vh; */
 }
 
 .video_container{
   text-align: center;
+  /* height: 70vh; */
+}
+
+.video_description{
+  /* height: 30%; */
 }
 
 .video_container video{

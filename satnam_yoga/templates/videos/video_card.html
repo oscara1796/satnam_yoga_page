@@ -1,22 +1,26 @@
 {% load static %}
 {% if video %}
+
   <h3>{{video.title}}</h3>
   {% if request.user.is_authenticated %}
     <video  id="video" width="320" height="240" controls controlsList="nodownload">
      <source src="{{video.upload.url}}" type="video/mp4">
     </video>
+    <p class="video_description">{{video.description|linebreaks}}</p>
     {% else %}
       <div class="video_list_img_container">
           <img src="{% static "img/video-placeholder.png" %}" alt="" style="width:100%;">
           <p class="videos_list_center_text">Inicia sesión para poder reproducir el video</p>
       </div>
     {% endif %}
+
 {% else %}
   <h3>{{video_content.first.title}}</h3>
   {% if request.user.is_authenticated %}
     <video  id="video" width="320" height="240" controls controlsList="nodownload">
      <source src="{{video_content.first.upload.url}}" type="video/mp4">
     </video>
+    <p class="video_description">{{video_content.first.description|linebreaks}}</p>
     {% else %}
       <div class="video_list_img_container">
           <img src="{% static "img/video-placeholder.png" %}" alt="" style="width:100%;">
