@@ -4,6 +4,8 @@ from django.conf import settings
 from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from users.models import Profile
 
 # Create your views here.
 
@@ -32,27 +34,16 @@ def create_checkout_session(request):
         domain_url = 'http://localhost:8000/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
-            # Create new Checkout Session for the order
-            # Other optional params include:
-            # [billing_address_collection] - to display billing address details on the page
-            # [customer] - if you have an existing Stripe Customer ID
-            # [payment_intent_data] - capture the payment later
-            # [customer_email] - prefill the email input in the form
-            # For full details see https://stripe.com/docs/api/checkout/sessions/create
-
-            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
             checkout_session = stripe.checkout.Session.create(
                 client_reference_id=request.user.id if request.user.is_authenticated else None,
                 success_url=domain_url + 'payments/success?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=domain_url + 'payments/cancelled/',
                 payment_method_types=['card'],
-                mode='payment',
+                mode='subscription',
                 line_items=[
                     {
-                        'name': 'Prueba de pago',
+                        'price': settings.STRIPE_PRICE_ID,
                         'quantity': 1,
-                        'currency': 'mxn',
-                        'amount': '1000',
                     }
                 ]
             )
@@ -82,8 +73,20 @@ def stripe_webhook(request):
 
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
 
-        print("Payment was successful.")
-        # TODO: run some custom code here
+        # Fetch all the required data from session
+        client_reference_id = session.get('client_reference_id')
+        stripe_customer_id = session.get('customer')
+        stripe_subscription_id = session.get('subscription')
+
+        # Get the user and create a new Profile
+        user = User.objects.get(id=client_reference_id)
+        Profile.objects.create(
+            user=user,
+            stripeCustomerId=stripe_customer_id,
+            stripeSubscriptionId=stripe_subscription_id,
+        )
+        print(user.username + ' just subscribed.')
 
     return HttpResponse(status=200)

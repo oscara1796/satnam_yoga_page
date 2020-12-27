@@ -14,6 +14,9 @@ class Profile(models.Model):
 
     active = models.BooleanField(default=False, null=False)
 
+    stripeCustomerId = models.CharField(max_length=255, null= True)
+    stripeSubscriptionId = models.CharField(max_length=255, null= True)
+
     created = models.DateTimeField(auto_now_add= True);
     modified = models.DateTimeField(auto_now= True);
 
