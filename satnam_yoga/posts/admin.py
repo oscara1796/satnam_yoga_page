@@ -1,43 +1,26 @@
 from django.contrib import admin
 
 
-from posts.models import Post
+from posts.models import Post, Category
 
 # Register your models here.
+class CategoryAdmin(admin.ModelAdmin):
+    readonly_fields= ('created', 'updated')
 
-
-@admin.register(Post)
 
 class PostAdmin(admin.ModelAdmin):
-    
-    list_display= ('pk','user','Profile', 'title', 'photo');
-    list_display_links = ('pk','user',);
-    search_fields = ('user__email','user__first_name', 'user__last_name','title','user__username');
-    
-    
-    list_filter = ('created',
-    'modified',
-    'user__is_active',
-    'user__is_staff'
-    )
-     
-    fieldsets = (
-    #Primer categoria
-        ("Post", {
-            'fields': (
-            ('title','photo'),
-            ),
-        }
-        ),
+    readonly_fields= ('created', 'updated')
+    list_display= ('title','author','published','post_categories')
+    ordering = ('author','published')
+    search_fields= ('title', 'author__username','categories__name')
+    date_hierarchy= 'published'
+    list_filter = ('author__username', 'categories__name')
 
-    #Segunda  categoria
-    ("META-DATA",{
-        'fields':(
-            ('user'),
-            ('created','modified'),
-        ),
-    }
-     ),
-    )
-    
-    readonly_fields = ('created', 'modified','user')
+
+    def post_categories(self, obj):
+        return ', '.join([c.name for c in obj.categories.all().order_by('name') ])
+    post_categories.short_description = 'Categorias'
+
+
+admin.site.register(Category,CategoryAdmin)
+admin.site.register(Post,PostAdmin)

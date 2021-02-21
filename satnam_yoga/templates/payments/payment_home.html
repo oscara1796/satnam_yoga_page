@@ -3,7 +3,7 @@
 {% load static %}
 {% block head_content %}
 
-<title>Django + Stripe Checkout</title>
+<title>Pagos </title>
 <script src="https://js.stripe.com/v3/"></script>
 <script src="{% static 'js/main.js' %}"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
@@ -12,10 +12,79 @@
 
 {% block container %}
 
-  <section class="section">
-    <div class="container">
-      <button class="button is-primary" id="submitBtn">Purchase!</button>
-    </div>
-  </section>
+<div class="payment_container container mt-3 ">
+      {% include "payments/subs_card.html" %}
+</div>
+
+<script>
+  var paypal_form = document.getElementsByClassName("paypal-form")
+  console.log(paypal_form)
+  var details_inputs =  []
+  for (var i = 0; i < paypal_form.length; i++) {
+       if (paypal_form[i].children[1].value == 'but_1' || paypal_form[i].children[1].value == 'but_2') {
+           details_inputs.push(paypal_form[i].children[1])
+       }
+  }
+  console.log(details_inputs)
+  {% for plan in paypal_plans %}
+          {% if plan.SKU == 'PLAN_ANUAL' %}
+              paypal.Buttons({
+                  createSubscription: function(data, actions) {
+
+                  return actions.subscription.create({
+
+
+                    'plan_id': '{{plan.paypalPlanId}}'
+
+
+                  });
+
+                },
+
+
+                onApprove: function(data, actions) {
+
+                  data.plan_id = '{{plan.paypalPlanId}}'
+                  var jsonDetails = JSON.stringify(data)
+                  console.log(jsonDetails)
+                  details_inputs[1].value = jsonDetails
+                  paypal_form[1].submit()
+                  console.log(data)
+
+                }
+              }).render('#but_2');
+        {% endif %}
+
+        {% if plan.SKU == 'PLAN_MENSUAL' %}
+          console.log('{{plan.paypalPlanId}}')
+            paypal.Buttons({
+              createSubscription: function(data, actions) {
+
+              return actions.subscription.create({
+
+
+                'plan_id': '{{plan.paypalPlanId}}'
+
+
+              });
+
+            },
+              onApprove: function(data, actions){
+                  // This function shows a transaction success message to your buyer.
+                  // alert('Transaction completed by ' + details.payer.name.given_name);
+                  data.plan_id = '{{plan.paypalPlanId}}'
+                  var jsonDetails = JSON.stringify(data)
+                  console.log(jsonDetails)
+                  details_inputs[0].value = jsonDetails
+                  paypal_form[0].submit()
+                  console.log(data)
+              }
+
+            }).render('#but_1');
+        {% endif %}
+  {% endfor %}
+    // This function displays Smart Payment Buttons on your web page.
+</script>
+
 
 {% endblock %}

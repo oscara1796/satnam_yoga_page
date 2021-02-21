@@ -138,6 +138,25 @@ figure{
   height: 80%;
 }
 
+@media only screen and (max-width: 768px) {
+
+  .main_text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .main_text p{
+    order:2;
+    width: 100%;
+  }
+  .main_text_img{
+    order:1;
+    width: 100%;
+  }
+
+}
+
 .main_text_quote{
   padding: 2% 20%;
   flex-direction: column;
@@ -207,6 +226,29 @@ figure{
 
 }
 
+
+@media only screen and (max-width: 768px) {
+
+  .main_text .button{
+    width: 90%;
+  }
+
+  .main_text button{
+    width: 90%;
+  }
+
+  .main_text_quote button{
+    width: 90%;
+  }
+
+  .main_text_quote{
+    padding: 2% 5%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
 .main_text .button a:hover{
   color: #194582;
 }
@@ -258,6 +300,14 @@ figure{
   position: absolute;
   font-size: 45px;
   font-weight: bold;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .overlay {
+    padding: 0% 5%;
+  }
+
 }
 
 .footer{

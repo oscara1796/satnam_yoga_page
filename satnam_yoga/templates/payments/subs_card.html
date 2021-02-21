@@ -1,0 +1,36 @@
+{% load static %}
+
+{% for product in list_products %}
+  <div class=" card_container_payments d-flex flex-column">
+    <h4>{{product.type}}</h4>
+    <div class="card mb-4" style="width: 18rem;">
+      <img src="{{product.images.0}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">
+          ${{product.price}} MXN
+          <br>
+          <br>
+          {{ product.description }}
+        </p>
+        {% if not subscription  %}
+        <button type="submit" class="submitBtn mb-4 btn btn-primary" id="submitBtn" value="{{product.price_id}}" onclick="give_value_session_id(this)">Subscribe</button>
+        <div id="{{product.id}}"></div>
+        <form class="paypal-form"  method="post" action='{% url 'payment_home' %}'>
+          {% csrf_token %}
+            <input  class="details-input" type="hidden" name="details" class="details-input" value="{{product.id}}"/>
+        </form>
+        {% elif  subscription.status == 'ACTIVE' and profile.paypalSubscriptionId == subscription.id %}
+        <p> Subscripción de paypal </p>
+        <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Cancelar Subscripción</a></button>
+        {% elif  subscription.cancel_at_period_end != True %}
+        <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Cancelar</a></button>
+        {% else %}
+          <p>Si tu periodo de pago no ha terminado puedes volver a activar tu subscripción para poder continuar con los beneficios</p>
+          <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Reactivar subscripción</a></button>
+        {% endif %}
+
+      </div>
+  </div>
+</div>
+{% endfor %}

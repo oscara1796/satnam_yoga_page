@@ -1,11 +1,18 @@
 {% load static %}
 
 
-<footer class="footer">
+<footer class="footer ">
   <p>Síguenos</p>
   <div class="logo_social">
     <a href="https://www.facebook.com/satnamyogaestudio"><img src="{% static "img/facebook_logo.png" %}" alt=""></a>
     <a href="https://www.instagram.com/sandy_gururattan/?hl=es-la"><img src="{% static "img/instagram_logo.png" %}" alt=""></a>
+  </div>
+  <div class="foot_pages">
+    {% load pages_extras %}
+      {% get_page_list as pages %}
+      {% for page in pages %}
+      <a href="{% url 'page' page.id page.title|slugify %}" class="link">{{page.title}}</a>{% if not forloop.last %}-{% endif %}
+      {% endfor %}
   </div>
   <div class="iconos ">Iconos diseñados por <a href="https://www.flaticon.es/autores/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
 </footer>

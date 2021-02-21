@@ -1,19 +1,25 @@
+
 {% load static %}
-<nav class="navbar " id="main-navbar">
+<nav class="navbar" id="main-navbar">
     <figure>
-      <img src="{% static "img/logo.jpg" %}" alt="">
+      <a href="{% url 'feed' %}"><img src="{% static "img/logo.jpg" %}" alt=""></a>
     </figure>
 
-    <ul id="nav-menu" class="nav_menu mr-auto">
-      <li><a href="">Dashboard</a></li>
-      <li><a href="">cursos</a></li>
-      <li><a href="{% url "store" %}">Tienda</a></li>
+    <ul id="nav-menu" class="nav_menu">
+      <!-- <li><a href="">Dashboard</a></li> -->
+      <li><a href="{% url 'video_list_menu' %}">Cursos</a></li>
+      <li><a href="{% url 'blog' %}">Blog</a></li>
+      <li><a href="{% url "store" %}">Aceites Esenciales</a></li>
+      <li><a href="{% url "contact" %}">Contacto</a></li>
     </ul>
 
     {% if request.user.is_authenticated %}
       <div id="nav-user" class="navbar-user ml-auto">
-        <img src="{% static "img/default-profile.png" %}" alt="">
-
+        {% if request.user.profile.image %}
+            <a href="{% url 'update_profile' %}"><img src="{{request.user.profile.image.url}}" alt=""></a>
+        {% else%}
+            <a href="{% if request.user.profile %}{% url 'update_profile' %}{% else %}{% url 'payment_home' %}{% endif %}"><img src="{% static 'img/default-profile.png' %}" class="rounded-circle" height="50" /></a>
+        {% endif %}
         <a href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i></a>
       </div>
 
@@ -21,11 +27,14 @@
         <i class="fa fa-bars"></i>
       </a>
     {% else %}
-      <div class="user_not_authenticated">
+      <div class="user_not_authenticated ml-auto">
         <a class="mr-2" href="{% url "login" %}">Ingresa </a>
         <p>/</p>
         <a class="ml-2"href="{% url "signup" %}"> Registrate</a>
       </div>
+      <a id="icon" href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
     {% endif %}
 
 </nav>

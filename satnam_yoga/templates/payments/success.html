@@ -11,8 +11,11 @@
 {% block container %}
 
 <section class="section">
-  <div class="container">
-    <p>Your payment succeeded.</p>
+  <div class="container d-flex align-items-center flex-column">
+    <img src="{% static "img/succes_mark.png" %}" alt="">
+    <p class="text-center" style="font-weight: bold; font-size: 20px;">Tu pago se ha procesado correctamente.</p>
+    <p class="text-center" style="font-weight: bold; font-size: 20px;">Para continuar favor de ir al siguiente link y complete los datos de su perfil</p>
+    <a style="text-decoration: none; font-size: 20px; color: #194582; font-weight: bold" href="{% url "update_profile" %}">Datos de perfil</a>
   </div>
 </section>
 

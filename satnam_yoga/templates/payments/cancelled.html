@@ -11,9 +11,18 @@
 {% block container %}
 
 <section class="section">
+
   <div class="container">
-    <p>Your payment was cancelled.</p>
+    {% if subscription.cancel_at_period_end == True %}
+    <p>Tu subscripción ha sido cancelada.</p>
+    <p> Puede visualizar el contenido hasta el termino de su subscripción {{time_left}}</p>
+    {% else %}
+    <p>Tu pago no se ha podido procesar </p>
+    <p>Favor de corroborar información </p>
+    {% endif %}
   </div>
+
 </section>
+
 
 {% endblock %}

@@ -35,10 +35,12 @@
 
   <div class="container main">
 
-      <div class="d-flex flex-column align-items-center mt-3 mb-3">
+      <div class="welcome-feed d-flex flex-column align-items-center mt-3 mb-3">
         <h1>¿Qué es satnam Yoga?</h1>
 
-        <button type="button" name="button">Ver video </button>
+        <video src="{% static 'img/Benvenida.m4v' %}" controls >
+
+        </video>
       </div>
 
       <section class="portada mb-3">
@@ -77,19 +79,19 @@
 
           <div class="memebership_cards">
               <h3>Acceso Ilimitado</h3>
-              <p class="membership_cost">$499 mxn</p>
+              <p class="membership_cost">${{price_subs_month}} mxn</p>
               <p class="membership_text">mensual</p>
           </div>
 
           <div class="memebership_cards">
               <h3>Clases online</h3>
               <p class="membership_text">¡Mejora tu vida hoy!
-              Inicia tu prueba gratis por 7 días</p>
-              <button type="button" name="button"><a href="">SUSCRIBIR MI MEMBRESIA</a></button>
+              </p>
+              <button type="button" name="button"><a id="membership_but_payment" href="{% url 'payment_home' %}">SUSCRIBIR MI MEMBRESIA</a></button>
           </div>
         </div>
 
-        <h3 class="mt-4 mb-1">Continuamente subimos clases para ti !</h3>
+        <h3 class="mt-4 mb-5">Continuamente subimos clases para ti !</h3>
    </section>
 
    <section class="online_clases">
@@ -104,24 +106,24 @@
         feliz.
         <br>
      </p>
-     <button type="button" name="button">ÚNETE AHORA</button>
+     <button type="button" name="button"><a href="{% url 'payment_home' %}">ÚNETE AHORA</a></button>
    </section>
 
    <section class="class_benefition_cards mb-4">
      <h2 class="text-center mt-3 ">Clases completas de kundalini Yoga</h2>
 
-     <div class="card_container ">
-        <div class=" yoga_class_content">
+     <div class="card_container">
+        <div class="yoga_class_content">
           <img src="{% static "img/om.png" %}" alt="">
           <p class="clases_card_title">Kriya / series</p>
           <p>Ejercicios físicos y mentales, equilibria tu cuerpo, tu mente y alma.</p>
         </div>
-        <div class=" yoga_class_content">
+        <div class="yoga_class_content">
           <img src="{% static "img/mind_yoga.png" %}" alt="">
           <p class="clases_card_title">Meditación</p>
           <p>Purifica tu mente, elimina la basura mental y conócete a ti  mismo.</p>
         </div>
-        <div class=" yoga_class_content">
+        <div class="yoga_class_content">
           <img src="{% static "img/breathe.png" %}" alt="">
           <p class="clases_card_title">Respiración / Pranayama</p>
           <p>Revitaliza tu energía, regenera tu cuerpo e integra nuevos y mejores hábitos.</p>
@@ -156,7 +158,7 @@
        <div class="benefit_card_item benefit_card_center">
         <img  src="{% static "img/beneficios_satnam.png" %}" alt="">
        </div>
-       
+
 
        <div class="benefit_card_item">
          <img src="{% static "img/fuerte.png" %}" alt="">
@@ -196,7 +198,9 @@
       <h3>¿Estás listo para empezar?</h3>
       <p>Empieza a encontrate a ti mismo. <br> Un camino hacia el bienestar.</p>
      </div>
-     <button><a href="">TOMAR UNA CLASE</a></button>
+     {% if firts_video and category %}
+     <button><a href="{% url 'video_id_show' category.id firts_video.id %}"">TOMAR UNA CLASE</a></button>
+     {% endif %}
    </section>
 
 {% endblock %}

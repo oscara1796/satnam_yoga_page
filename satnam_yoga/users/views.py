@@ -8,8 +8,29 @@ from users.models import Profile
 from django.contrib.auth.models import User
 
 # Forms
-from users.forms import SignupForm
+from users.forms import SignupForm, ProfileForm
 
+
+@login_required
+def update_profile_view(request):
+    profile = request.user.profile
+    user = request.user
+    form = ProfileForm()
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+            user.save()
+            profile.phone_number = data['phone_number']
+            profile.image = data['image']
+            profile.save()
+
+            return redirect('update_profile')
+
+    return render(request, 'users/update_profile.html',{'profile': profile, 'user': user, 'form': form})
 
 
 
@@ -23,7 +44,7 @@ def login_view(request):
             login(request, user);
             return redirect('feed')
         else:
-            return render(request, 'users/login.html',{'error': 'Invalid username and password'})
+            return render(request, 'users/login.html',{'error': 'Usuario invalido o contraseña'})
 
     return render(request, 'users/login.html')
 
@@ -32,17 +53,19 @@ def logout_view(request):
 
     logout(request)
 
-    return redirect('login')
+    return redirect('feed')
 
 
 
 def signup_view(request):
      """Sign up view"""
+
      if request.method == 'POST':
          form = SignupForm(request.POST)
          if form.is_valid():
              form.save()
              return redirect('login')
+
      else:
          form = SignupForm()
 

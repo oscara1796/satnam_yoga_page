@@ -10,21 +10,65 @@
 
 {% block container %}
 
-<section class="container-fluid video-list-container">
+<section id= "video_father_container" class="container video-list-container mb-4">
 
-  <div class="video_container">
-    {% include "videos/video_card.html" %}
+  <div class="category_box" style="width: inherit">
+      <h3 class="">Categorías:</h3>
+        <ul class="m-0 p-0" style="width: inherit">
+          {% for category in categories_content %}
+          <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" href="{% url 'category' category.id %}"><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a>
+          {% endfor %}
+        </ul>
   </div>
 
   <div class="video_list_menu">
-
-    {% for video in video_content %}
-        <ul>
-          <li><a href="{% url "video_id_show" video.id %}">{{video.title}}</a></li>
-        </ul>
-    {% endfor %}
+    <div class="video_container">
+      {% include "videos/video_card.html" %}
+    </div>
+    <div class="" id="Video_list_displayer">
+        <hr id="video_list_line">
+          <ul style="width: 100%;">
+            <!-- <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li>
+            <li>prueba</li> -->
+            {% for video in category.video_set.all %}
+            <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" href="{% url 'video_id_show' category.id video.id %}">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li>
+            {% endfor %}
+          </ul>
+    </div>
   </div>
 </section>
+
+<script type="text/javascript">
+  console.log("hola")
+  var video_parent = document.getElementById("video_father_container");
+  console.log(video_parent)
+  var children= video_parent.children
+  var video_list_menu=  children[1]
+  var video_container = video_list_menu.children[0]
+  if(video_container.children.length == 0){
+    console.log("Hola")
+    video_list_menu.style.display = "none"
+  }
+
+</script>
 
 
 {% endblock %}

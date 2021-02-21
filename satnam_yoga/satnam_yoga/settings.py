@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #Local apps:
-    'users',
-    'videos',
+    'ckeditor',
+    'users.apps.UsersConfig',
+    'videos.apps.VideosConfig',
     'posts',
     'payments.apps.PaymentsConfig',
+    'contact',
+    'pages.apps.PagesConfig',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'satnam_yoga.middleware.profile_payment_completion_middleware',
+    'satnam_yoga.middleware.user_profile_completion_middleware'
 ]
 
 ROOT_URLCONF = 'satnam_yoga.urls'
@@ -82,8 +87,13 @@ WSGI_APPLICATION = 'satnam_yoga.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'dbsatnam',
+        'USER': 'dbadmin',
+        'PASSWORD': '17063471',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -140,6 +150,43 @@ STATICFILES_FINDERS = [
 
 # STRIPE
 STRIPE_PRICE_ID = "price_1I2kVQJQ5QjlwW1LWRpqDQlC"
+STRIPE_PRODUCT_ID = "prod_Ie2atcJCFnE9JN"
+STRIPE_PRICE_YEAR_ID = "price_1I0UVAJQ5QjlwW1L7gp17Cpi"
+STRIPE_PRODUCT_YEAR_ID = "prod_IbhmBE0npzldsr"
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51Hy78jJQ5QjlwW1LlMZylr7CmJh4I4EEt7kaBBXRgnSSRTKjVXPVIzcAz5UcCecrMCQulDqbCtiffR5BbotMLm3Z00ZgMyRVhh'
 STRIPE_SECRET_KEY = 'sk_test_51Hy78jJQ5QjlwW1LvaXVjvRE0YteDPEkqhIUPop91IYye5SPKedAXlUQhsy7SBtW6UqfFDoQ1rjQfb2bNOFqIaRp005Ur0AZsm'
 STRIPE_ENDPOINT_SECRET  = 'whsec_hLynjuTrDlemhunB8gR8GSizdARAqZCu'
+
+#ckeditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat'],
+            ['FontSize'],
+            ['Font'],
+            ['Format']
+        ],
+    }
+}
+
+
+#Email Config
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT= '587'
+EMAIL_HOST_USER= 'satnamyogajal@hotmail.com'
+EMAIL_HOST_PASSWORD= 'GuruRattan1319'
+EMAIL_USE_TLS= True
+DEFAULT_FROM_EMAIL = 'satnamyogajal@hotmail.com'
+SERVER_EMAIL = 'satnamyogajal@hotmail.com'
+# EMAIL_USE_SSL= False
+
+LOGIN_URL='login'
+
+# PAYPAL INFO
+PAYPAL_CLIENT_ID = 'AY86OU5VjDXN_nDheNxF6xVMtK50JnQmA-1SxR8M1TJCj48tk0EYF9-yaqFYFEzhG-o8gjdPvNPYOWRU'
+PAYPAL_SECRET_ID = 'EK0__GZD3G68m18l90pankZhHFB7FNd3CKXSjL9Alz6OdISom4iFM85rM5FbC_UX019vtapOmIUfgh7g'
+URL_PAYPAL_TOKEN = 'https://api.sandbox.paypal.com/v1/oauth2/token'

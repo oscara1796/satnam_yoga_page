@@ -22,11 +22,12 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = ('created',
     'modified',
     'user__is_active',
-    'user__is_staff'
+    'user__is_staff',
+    'active'
     )
 
 
-    readonly_fields = ('created', 'modified')
+    readonly_fields = ('created', 'modified','active')
 
 
     fieldsets = (
@@ -46,10 +47,19 @@ class ProfileAdmin(admin.ModelAdmin):
     ),
     }),
 
+    ("Stripe info",{
+    'fields':(
+        ('stripeCustomerId'),
+        ('stripeSubscriptionId'),
+        ('paypalSubscriptionId'),
+    ),
+    }),
+
     #Tercera categoria
     ("META_DATA",{
         "fields":(
             ('created', 'modified'),
+            ('active'),
         ),
     })
     )

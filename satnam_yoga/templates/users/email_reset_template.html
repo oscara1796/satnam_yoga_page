@@ -1,0 +1,14 @@
+
+
+<section>
+  <p>Recibió este correo electrónico porque solicitó un restablecimiento de contraseña para su cuenta de usuario en {{ domain }}</p>
+  <br>
+  <p>Vaya a la página siguiente y elija una nueva contraseña:</p>
+  <br>
+  {{ protocol}}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+  <br>
+  <p>Su nombre de usuario, en caso de que lo haya olvidado: <span style="font-weight: bold ">{{user}}</span> </p>
+  <br>
+  <p>¡Gracias por usar nuestro sitio!</p>
+  <p>El {{domain}} Equipo</p>
+</section>

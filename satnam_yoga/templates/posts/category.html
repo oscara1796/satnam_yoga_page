@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{category}}{% endblock %}
+
+{% block container %}
+
+<h2 class="container mb-3">Categoría <span style="font-weight: 550">{{category.name}}</span>:</h2>
+
+{% for post in posts %}
+  {% if not forloop.first  %}
+    <hr style="border-top: 1px solid gray; width: 50%;">
+  {% endif %}
+<section class="page-section cta mb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-9 mx-auto">
+            <div class="cta-innerv text-center rounded">
+              <h2 class="section-heading mb-5">
+                <span class="section-heading-upper">{{post.published|date:"SHORT_DATE_FORMAT"}}</span>
+                <span class="section-heading-lower">{{post.title}}</span>
+              </h2>
+              <p class="mb-0">
+                <img class="mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{{post.image.url}}" alt="">
+              </p>
+              <p class="mb-0 mbt mt-3">
+                {{post.content|safe}}
+              </p>
+              <p class="mb-0 mbt">
+                <span class="section-heading-under">Publicado por <em><b>{{post.author.username}}</b></em> en
+                  {% for category in post.categories.all %}
+                  <a href="{% url 'category_blog' category.id %}" class="link"> {{category.name}}</a> {% if not forloop.last %},{% endif %}
+                  {% endfor %}
+                  <em>
+                </span>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+{% endfor %}
+
+{% include "posts/pagination.html" %}
+
+{% endblock %}
