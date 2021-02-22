@@ -6,7 +6,7 @@ from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from users.models import Profile
+from users.models import Profile, statusChoices
 from .models import Paypal
 import json
 import requests
@@ -46,7 +46,7 @@ def paypal_handle(request):
                 user=user,
                 paypalSubscriptionId= session['subscriptionID'],
                 paypalPlanId= session['plan_id'],
-                active= 'A',
+                active= statusChoices.ACTIVE,
             )
         # else:
         #     profile= Profile.objects.get(user=user)
@@ -137,7 +137,7 @@ def Cancelled_or_Reactivate_SubscriptionView(request):
         stripe_customer.stripeSubscriptionId,
         cancel_at_period_end=False
         )
-        stripe_customer.active= 'A'
+        stripe_customer.active= statusChoices.ACTIVE
         stripe_customer.save()
         return redirect('feed')
     else:
@@ -145,7 +145,7 @@ def Cancelled_or_Reactivate_SubscriptionView(request):
         stripe_customer.stripeSubscriptionId,
         cancel_at_period_end=True
         )
-        stripe_customer.active= 'T'
+        stripe_customer.active= statusChoices.TRIAL
         stripe_customer.save()
         subscription = stripe.Subscription.retrieve(stripe_customer.stripeSubscriptionId)
         timestamp= datetime.fromtimestamp(subscription.current_period_end)
@@ -266,12 +266,12 @@ def stripe_webhook(request):
                 user=user,
                 stripeCustomerId=stripe_customer_id,
                 stripeSubscriptionId=stripe_subscription_id,
-                active= 'A',
+                active= statusChoices.ACTIVE ,
             )
         else:
             profile= Profile.objects.get(user=user)
             profile.stripeSubscriptionId = stripe_subscription_id
-            profile.active = 'A'
+            profile.active = statusChoices.ACTIVE
             profile.save()
 
         profile= Profile.objects.get(user=user)
@@ -290,7 +290,8 @@ def stripe_webhook(request):
         profile_exists= Profile.objects.filter(stripeCustomerId=stripe_customer_id).exists()
         if profile_exists:
             profile= Profile.objects.get(stripeCustomerId=stripe_customer_id)
-            profile.active = 'C'
+            profile.active = statusChoices.CANCELLED
+            profile.save()
             print('CUSTOMER: ', profile)
             print('profile.active ', profile.active)
 
@@ -304,7 +305,8 @@ def stripe_webhook(request):
 
         if profile_exists:
             profile= Profile.objects.get(stripeCustomerId=stripe_customer_id)
-            profile.active = 'C'
+            profile.active = statusChoices.CANCELLED
+            profile.save()
             print(profile.active)
             print('CUSTOMER CANCELLED STRIPE: ', profile)
 

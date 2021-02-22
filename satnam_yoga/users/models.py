@@ -2,20 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
+from enum import Enum
 
 # Create your models here.
 
 
-class Profile(models.Model):
-    ACTIVE = 'A'
-    TRIAL = 'T'
-    CANCELLED = 'C'
+class statusChoices(Enum):
+    ACTIVE = 'ACTIVO'
+    TRIAL = 'TEMPORAL'
+    CANCELLED = 'CANCELADO'
 
-    CHOICE = (
-    (ACTIVE, 'Activo'),
-    (TRIAL, 'temporal'),
-    (CANCELLED, 'Cancell'),
-    )
+
+
+class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name= "Usuario")
 
@@ -23,7 +22,7 @@ class Profile(models.Model):
 
     phone_number = models.CharField(max_length=20, blank=True, verbose_name= "Teléfono");
 
-    active = models.CharField(max_length=1, null=False, verbose_name= "Status", choices= CHOICE, default=CANCELLED)
+    active = models.CharField(max_length=1, null=False, verbose_name= "Status", choices= [(choice, choice.value) for choice in statusChoices], default=statusChoices.CANCELLED)
 
     stripeCustomerId = models.CharField(max_length=255, verbose_name= "Stripe Cliente id", blank=True, null= True)
     stripeSubscriptionId = models.CharField(max_length=255, verbose_name= "Stripe Subscripción id", blank=True, null= True)
