@@ -27,7 +27,7 @@ class ProfileAdmin(admin.ModelAdmin):
     )
 
 
-    readonly_fields = ('created', 'modified','active')
+    readonly_fields = ('created', 'modified')
 
 
     fieldsets = (
@@ -52,6 +52,7 @@ class ProfileAdmin(admin.ModelAdmin):
         ('stripeCustomerId'),
         ('stripeSubscriptionId'),
         ('paypalSubscriptionId'),
+        ('paypalPlanId'),
     ),
     }),
 
@@ -59,7 +60,7 @@ class ProfileAdmin(admin.ModelAdmin):
     ("META_DATA",{
         "fields":(
             ('created', 'modified'),
-            ('active'),
+            ('active'), ('paypal_cancel_date'),
         ),
     })
     )

@@ -13,7 +13,7 @@
 <section class="section">
 
   <div class="container">
-    {% if subscription.cancel_at_period_end == True %}
+    {% if subscription.cancel_at_period_end == True or subscription.status == 'SUSPENDED' %}
     <p>Tu subscripción ha sido cancelada.</p>
     <p> Puede visualizar el contenido hasta el termino de su subscripción {{time_left}}</p>
     {% else %}

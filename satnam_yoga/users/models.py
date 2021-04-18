@@ -22,13 +22,14 @@ class Profile(models.Model):
 
     phone_number = models.CharField(max_length=20, blank=True, verbose_name= "Teléfono");
 
-    active = models.CharField(max_length=1, null=False, verbose_name= "Status", choices= [(choice, choice.value) for choice in statusChoices], default=statusChoices.CANCELLED)
+    active = models.CharField(max_length=20, null=False, verbose_name= "Status", choices= [(choice, choice.value) for choice in statusChoices], default=statusChoices.CANCELLED)
 
     stripeCustomerId = models.CharField(max_length=255, verbose_name= "Stripe Cliente id", blank=True, null= True)
     stripeSubscriptionId = models.CharField(max_length=255, verbose_name= "Stripe Subscripción id", blank=True, null= True)
     paypalSubscriptionId = models.CharField(max_length=255, verbose_name= "Paypal Subscripción id", blank=True, null= True)
     paypalPlanId = models.CharField(max_length=255, verbose_name= "Paypal plan id", blank=True, null= True)
 
+    paypal_cancel_date = models.DateTimeField(auto_now_add= False, null=True, blank= True, verbose_name= "fecha de cancelación paypal");
     created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");
     modified = models.DateTimeField(auto_now= True, verbose_name= "Modificado");
 

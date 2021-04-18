@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from videos.models import Video, Category
 from users.models import Profile
+from payments.views import get_paypal_token
 
 #Video cipher vdocipher
 
@@ -30,6 +31,7 @@ def list_menu(request):
 def categories_list(request):
 
     categories_content = Category.objects.all()
+    print(categories_content)
 
     return render(request, 'videos/videos.html', {'categories_content': categories_content})
 
@@ -38,12 +40,23 @@ def category(request, category_id ):
     categories_content = Category.objects.all()
     category= get_object_or_404(Category,id= category_id)
     video_content = Video.objects.filter(categories=category).order_by('created')
+    subscription= None
     try:
-        stripe_customer = Profile.objects.get(user=request.user)
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        subscription = stripe.Subscription.retrieve(stripe_customer.stripeSubscriptionId)
+        customer = Profile.objects.get(user=request.user)
+        print("TEST")
+        if customer.paypalSubscriptionId:
+            access_token = get_paypal_token()
+            headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
+            url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+            subscription = requests.get(url, headers=headers).json()
+            subscription['status'] =  subscription['status'].lower()
+            print('status: ', subscription['status'])
+        else:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content, 'subscription': subscription})
-    except Exception:
+    except Exception as e:
+        print(e)
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content})
 
 
@@ -54,10 +67,19 @@ def video_id_show(request, category_id, video_id):
     video= get_object_or_404(Video,id=video_id)
     category= get_object_or_404(Category,id= category_id)
     video_content = Video.objects.filter(categories=category).order_by('created')
+    subscription= None
     try:
-        stripe_customer = Profile.objects.get(user=request.user)
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        subscription = stripe.Subscription.retrieve(stripe_customer.stripeSubscriptionId)
+        customer = Profile.objects.get(user=request.user)
+        if customer.paypalSubscriptionId:
+            access_token = get_paypal_token()
+            headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
+            url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+            subscription = requests.get(url, headers=headers).json()
+            subscription['status'] =  subscription['status'].lower()
+            print(subscription['status'])
+        else:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
 
         return render(request, 'videos/videos.html', {
         "category": category,

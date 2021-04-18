@@ -6,14 +6,19 @@ from django.http.response import JsonResponse, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.utils import timezone, dateformat
 from users.models import Profile, statusChoices
 from .models import Paypal
 import json
 import requests
 import base64
+import pytz
 # Create your views here.
 
 def get_paypal_token():
+    """
+    Obtenemos el token de paypal de nuestra cuenta
+    """
     credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET_ID)
     encode_credential = base64.b64encode(credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
     headers = {
@@ -48,6 +53,7 @@ def paypal_handle(request):
                 paypalPlanId= session['plan_id'],
                 active= statusChoices.ACTIVE,
             )
+            return redirect('update_profile')
         # else:
         #     profile= Profile.objects.get(user=user)
         #     profile.paypalSubscriptionId = stripe_subscription_id
@@ -157,25 +163,61 @@ def Cancelled_or_Reactivate_SubscriptionView(request):
         })
 
 
-def Cancelled_paypal_View(request):
+def suspend_paypal_View(request):
 
     # Retrieve the subscription & product
     customer = Profile.objects.get(user=request.user)
     access_token = get_paypal_token()
 
     headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/cancel'
-
-    param = {
-    "reason": "Not satisfied with the service"
-    }
-    r = requests.get(url, headers=headers, data=param).json()
+    url2 = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/suspend'
+    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+    subscription = requests.get(url, headers=headers).json()
+    date_format = '%Y-%m-%dT%H:%M:%SZ'
+    last_payment = subscription["billing_info"]["last_payment"]["time"]
+    last_payment= datetime.strptime(last_payment, date_format)
+    last_payment = pytz.utc.localize(last_payment)
+    # print("THIS IS LAST DATE PAYMENT: ", last_payment)
+    paypal_plan = subscription["plan_id"]
+    paypal_plans = Paypal.objects.all()
+    post_req= requests.post(url2, headers=headers)
+    # print("post_request ", post_req )
+    customer.active = statusChoices.TRIAL
+    for plan in paypal_plans:
+        if plan.SKU == 'PLAN_ANUAL':
+            customer.paypal_cancel_date= last_payment + timezone.timedelta(days=365)
+        elif plan.SKU == 'PLAN_MENSUAL':
+            customer.paypal_cancel_date= last_payment + timezone.timedelta(days=1)
+    # print("THIS IS update DATE PAYMENT in profile: ", last_payment + timezone.timedelta(days=365))
+    customer.save()
+    subscription = requests.get(url, headers=headers).json()
+    timestamp= customer.paypal_cancel_date
 
 
     return render(request, 'payments/cancelled.html', {
         'subscription': subscription,
         'time_left':timestamp
     })
+
+def reactivate_paypal_View(request):
+
+    # Retrieve the subscription & product
+    customer = Profile.objects.get(user=request.user)
+    access_token = get_paypal_token()
+
+    headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
+    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/activate'
+
+    requests.post(url, headers=headers)
+    customer.active = statusChoices.ACTIVE
+    customer.paypal_cancel_date= None
+    customer.save()
+    timestamp= customer.paypal_cancel_date
+
+    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+    subscription = requests.get(url, headers=headers).json()
+
+    return redirect('payment_home')
 
 
 
@@ -284,16 +326,16 @@ def stripe_webhook(request):
 
 
         print(user.username + ' just subscribed.')
-    if event['type'] == 'customer.subscription.updated':
-        session = event['data']['object']
-        stripe_customer_id = session.get('customer')
-        profile_exists= Profile.objects.filter(stripeCustomerId=stripe_customer_id).exists()
-        if profile_exists:
-            profile= Profile.objects.get(stripeCustomerId=stripe_customer_id)
-            profile.active = statusChoices.CANCELLED
-            profile.save()
-            print('CUSTOMER: ', profile)
-            print('profile.active ', profile.active)
+    # if event['type'] == 'customer.subscription.updated':
+    #     session = event['data']['object']
+    #     stripe_customer_id = session.get('customer')
+    #     profile_exists= Profile.objects.filter(stripeCustomerId=stripe_customer_id).exists()
+    #     if profile_exists:
+    #         profile= Profile.objects.get(stripeCustomerId=stripe_customer_id)
+    #         profile.active = statusChoices.CANCELLED
+    #         profile.save()
+    #         print('CUSTOMER: ', profile)
+    #         print('profile.active ', profile.active)
 
     if event['type'] == 'customer.subscription.deleted':
         session = event['data']['object']
@@ -309,5 +351,6 @@ def stripe_webhook(request):
             profile.save()
             print(profile.active)
             print('CUSTOMER CANCELLED STRIPE: ', profile)
+            profile.delete();
 
     return HttpResponse(status=200)

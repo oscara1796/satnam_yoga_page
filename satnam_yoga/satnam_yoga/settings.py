@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'contact',
     'pages.apps.PagesConfig',
+    'BruteBuster',
 ]
 
 MIDDLEWARE = [
@@ -55,8 +56,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'BruteBuster.middleware.RequestMiddleware',
     'satnam_yoga.middleware.profile_payment_completion_middleware',
-    'satnam_yoga.middleware.user_profile_completion_middleware'
+    'satnam_yoga.middleware.user_profile_completion_middleware',
+    'satnam_yoga.middleware.user_profile_paypal_account_verify_is_active_middleware'
 ]
 
 ROOT_URLCONF = 'satnam_yoga.urls'
@@ -190,3 +193,9 @@ LOGIN_URL='login'
 PAYPAL_CLIENT_ID = 'AY86OU5VjDXN_nDheNxF6xVMtK50JnQmA-1SxR8M1TJCj48tk0EYF9-yaqFYFEzhG-o8gjdPvNPYOWRU'
 PAYPAL_SECRET_ID = 'EK0__GZD3G68m18l90pankZhHFB7FNd3CKXSjL9Alz6OdISom4iFM85rM5FbC_UX019vtapOmIUfgh7g'
 URL_PAYPAL_TOKEN = 'https://api.sandbox.paypal.com/v1/oauth2/token'
+
+
+BB_MAX_FAILURES= 5
+BB_BLOCK_INTERVAL= 5
+
+# CRON JOBS
