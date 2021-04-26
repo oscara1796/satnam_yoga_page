@@ -25,7 +25,7 @@ SECRET_KEY = '9$xjmaxhvb8b-^i(^l#rt^y4vnphw8zk5m2d+kowly=i=gu8s@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -193,6 +193,7 @@ LOGIN_URL='login'
 PAYPAL_CLIENT_ID = 'AY86OU5VjDXN_nDheNxF6xVMtK50JnQmA-1SxR8M1TJCj48tk0EYF9-yaqFYFEzhG-o8gjdPvNPYOWRU'
 PAYPAL_SECRET_ID = 'EK0__GZD3G68m18l90pankZhHFB7FNd3CKXSjL9Alz6OdISom4iFM85rM5FbC_UX019vtapOmIUfgh7g'
 URL_PAYPAL_TOKEN = 'https://api.sandbox.paypal.com/v1/oauth2/token'
+PAYPAL_WEEBHOOK_ID ='7CV46257E8172601D'
 
 
 BB_MAX_FAILURES= 5

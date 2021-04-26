@@ -12,4 +12,5 @@ urlpatterns = [
     path('config/', payments_views.stripe_config),
     path('create-checkout-session/', payments_views.create_checkout_session),
     path('webhook/', payments_views.stripe_webhook),
+    path('webhook/paypal/', payments_views.webhook_paypal),
 ]
