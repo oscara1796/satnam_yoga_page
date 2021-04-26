@@ -386,9 +386,9 @@ def webhook_paypal(request):
         resource= obj.get('resource')
 
         if event_type == 'PAYMENT.SALE.COMPLETED':
-            print(resource)
-            subs_id_paypal = resource['billing_agreement_id']
-            print('Se pago una suscripción al final y funciona esta madre')
+            # print(resource)
+            # subs_id_paypal = resource['billing_agreement_id']
+            # print('Se pago una suscripción al final y funciona esta madre')
         if event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
             print(resource)
             subs_id_paypal = resource['id']
@@ -402,6 +402,6 @@ def webhook_paypal(request):
             print('PROFILE: ', profile)
             print('Subscripción suspendida ')
         if event_type == 'BILLING.SUBSCRIPTION.ACTIVATED':
-            print(resource)
-            print('Subscripción activada ')
+            # print(resource)
+            # print('Subscripción activada ')
     return HttpResponse(status=200)
