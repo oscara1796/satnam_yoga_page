@@ -8,9 +8,9 @@ from videos.models import Video, Category
 
 
 class videoAdmin(admin.ModelAdmin):
-    list_display = ('pk','title', 'image', 'upload',)
+    list_display = ('pk','title', 'image','free_seen',)
     list_display_links = ('pk','title',)
-    list_editable = ( 'image', 'upload')
+    list_editable = ( 'image',)
     search_fields = ('title','id', 'categories__name')
 
     list_filter = ('created',

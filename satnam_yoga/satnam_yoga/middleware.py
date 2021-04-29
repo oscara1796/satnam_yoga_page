@@ -62,7 +62,7 @@ class user_profile_paypal_account_verify_is_active_middleware:
                             if  current_time >= suspend_date:
                                 access_token = get_paypal_token()
                                 headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}'}
-                                url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{profile.paypalSubscriptionId}/cancel'
+                                url = f'https://api-m.paypal.com/v1/billing/subscriptions/{profile.paypalSubscriptionId}/cancel'
                                 r = requests.post(url, headers=headers).json()
                                 profile.delete()
 

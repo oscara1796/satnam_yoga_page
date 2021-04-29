@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9$xjmaxhvb8b-^i(^l#rt^y4vnphw8zk5m2d+kowly=i=gu8s@'
+SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_SATNAM')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com']
 
 
 # Application definition
@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'contact',
     'pages.apps.PagesConfig',
     'BruteBuster',
+    'storages',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -92,10 +94,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'NAME': 'dbsatnam',
-        'USER': 'dbadmin',
-        'PASSWORD': '17063471',
-        'HOST': 'localhost',
+        'NAME': 'satnam',
+        'USER': 'oscar',
+        'PASSWORD': os.environ.get('DB_PASS_SATNAM'),
+        'HOST':  os.environ.get('DB_HOST_SATNAM'),
         'PORT': '3306',
     }
 }
@@ -142,7 +144,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "staticfiles")
 
 STATICFILES_DIRS =[os.path.join(BASE_DIR,"static")]
 
@@ -152,13 +154,13 @@ STATICFILES_FINDERS = [
 ]
 
 # STRIPE
-STRIPE_PRICE_ID = "price_1I2kVQJQ5QjlwW1LWRpqDQlC"
-STRIPE_PRODUCT_ID = "prod_Ie2atcJCFnE9JN"
-STRIPE_PRICE_YEAR_ID = "price_1I0UVAJQ5QjlwW1L7gp17Cpi"
-STRIPE_PRODUCT_YEAR_ID = "prod_IbhmBE0npzldsr"
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51Hy78jJQ5QjlwW1LlMZylr7CmJh4I4EEt7kaBBXRgnSSRTKjVXPVIzcAz5UcCecrMCQulDqbCtiffR5BbotMLm3Z00ZgMyRVhh'
-STRIPE_SECRET_KEY = 'sk_test_51Hy78jJQ5QjlwW1LvaXVjvRE0YteDPEkqhIUPop91IYye5SPKedAXlUQhsy7SBtW6UqfFDoQ1rjQfb2bNOFqIaRp005Ur0AZsm'
-STRIPE_ENDPOINT_SECRET  = 'whsec_hLynjuTrDlemhunB8gR8GSizdARAqZCu'
+STRIPE_PRICE_ID = "price_1I2MMzJQ5QjlwW1LnS05dQQj"
+STRIPE_PRODUCT_ID = "prod_IddeskIwOYslF2"
+STRIPE_PRICE_YEAR_ID = "price_1IlMcXJQ5QjlwW1Lk0t0Z3kY"
+STRIPE_PRODUCT_YEAR_ID = "prod_JO8umebEYZdtA7"
+STRIPE_PUBLISHABLE_KEY = 'pk_live_51Hy78jJQ5QjlwW1LttQugFTeDWJWFioiE6Oo2fquALWEb0aUM0kgmyxVmzQLn1avbsM0Puv5Ypb5XIyZtJnCJqW200RRuJfVfv'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY_SATNAM')
+STRIPE_ENDPOINT_SECRET  = os.environ.get('STRIPE_ENDPOINT_SECRET_SATNAM')
 
 #ckeditor
 CKEDITOR_CONFIGS = {
@@ -181,7 +183,7 @@ CKEDITOR_CONFIGS = {
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT= '587'
 EMAIL_HOST_USER= 'satnamyogajal@hotmail.com'
-EMAIL_HOST_PASSWORD= 'GuruRattan1319'
+EMAIL_HOST_PASSWORD= os.environ.get('EMAIL_HOST_PASSWORD_SATNAM')
 EMAIL_USE_TLS= True
 DEFAULT_FROM_EMAIL = 'satnamyogajal@hotmail.com'
 SERVER_EMAIL = 'satnamyogajal@hotmail.com'
@@ -190,13 +192,24 @@ SERVER_EMAIL = 'satnamyogajal@hotmail.com'
 LOGIN_URL='login'
 
 # PAYPAL INFO
-PAYPAL_CLIENT_ID = 'AY86OU5VjDXN_nDheNxF6xVMtK50JnQmA-1SxR8M1TJCj48tk0EYF9-yaqFYFEzhG-o8gjdPvNPYOWRU'
-PAYPAL_SECRET_ID = 'EK0__GZD3G68m18l90pankZhHFB7FNd3CKXSjL9Alz6OdISom4iFM85rM5FbC_UX019vtapOmIUfgh7g'
-URL_PAYPAL_TOKEN = 'https://api.sandbox.paypal.com/v1/oauth2/token'
-PAYPAL_WEEBHOOK_ID ='7CV46257E8172601D'
+# PAYPAL_CLIENT_ID = 'AY86OU5VjDXN_nDheNxF6xVMtK50JnQmA-1SxR8M1TJCj48tk0EYF9-yaqFYFEzhG-o8gjdPvNPYOWRU'
+PAYPAL_CLIENT_ID = 'AUPzUZNqLg2hEQ4tJUb-tpQIxk7zZtLfi5LvsacyyP46L4VQgBkgy2C6uVJHVk5LLFNMR_TE5cUA7llg'
+# PAYPAL_SECRET_ID = 'EK0__GZD3G68m18l90pankZhHFB7FNd3CKXSjL9Alz6OdISom4iFM85rM5FbC_UX019vtapOmIUfgh7g'
+PAYPAL_SECRET_ID = os.environ.get('PAYPAL_SECRET_ID_SATNAM')
+URL_PAYPAL_TOKEN = 'https://api.paypal.com/v1/oauth2/token'
+PAYPAL_WEEBHOOK_ID =os.environ.get('PAYPAL_WEEBHOOK_ID_SATNAM')
 
 
 BB_MAX_FAILURES= 5
 BB_BLOCK_INTERVAL= 5
 
-# CRON JOBS
+# django-storages
+AWS_QUERYSTRING_AUTH= False
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID_SATNAM')
+AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY_SATNAM')
+AWS_STORAGE_BUCKET_NAME='satnam-bucket'
+
+
+if os.getcwd() == '/app':
+    DEBUG= False

@@ -4,6 +4,8 @@ astroid==2.4.2
 audioplayer==0.6
 autopep8==1.5.4
 beautifulsoup4==4.9.3
+boto3==1.17.59
+botocore==1.20.59
 bs4==0.0.1
 certifi==2020.12.5
 cffi==1.14.5
@@ -18,12 +20,15 @@ django-brutebuster2==0.2.0
 django-ckeditor==6.0.0
 django-common-helpers==0.9.2
 django-js-asset==1.2.2
+django-storages==1.11.1
 filelock==3.0.12
 flake8==3.8.4
 gTTS==2.2.1
+gunicorn==20.1.0
 idna==2.10
 isort==5.6.4
 jedi==0.17.2
+jmespath==0.10.0
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
 mpg123==0.4
@@ -43,6 +48,7 @@ pyglet==1.5.14
 pylint==2.6.0
 pyOpenSSL==20.0.1
 pypiwin32==223
+python-dateutil==2.8.1
 python-jsonrpc-server==0.4.0
 python-language-server==0.36.2
 pytz==2020.5
@@ -50,6 +56,7 @@ pywin32==300
 ratelimit==2.2.1
 requests==2.25.1
 rope==0.18.0
+s3transfer==0.4.2
 six==1.15.0
 snowballstemmer==2.0.0
 soupsieve==2.1
@@ -61,5 +68,6 @@ ujson==4.0.1
 urllib3==1.26.2
 virtualenv==20.2.2
 wget==3.2
+whitenoise==5.2.0
 wrapt==1.12.1
 yapf==0.30.0

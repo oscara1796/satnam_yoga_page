@@ -1,0 +1,820 @@
+
+html{
+  position: relative;
+  min-height: 100%;
+}
+
+body{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 20vh !important
+}
+
+
+
+/* General atributes */
+
+.especial_text{
+  color:#2a99fa;
+  font-weight:bold;
+}
+
+/* Navbar */
+
+.navbar{
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  background-color: white;
+}
+
+.nav_menu{
+  list-style: none;
+  display: flex;
+  margin: 0;
+  background-color: white;
+
+}
+
+.nav_menu li{
+  margin: 0px 5px;
+
+}
+
+.nav_menu li a {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.nav_menu li a:hover{
+  color: #828181;
+}
+
+.navbar figure  a img{
+  width: 15vh;
+  margin: 0px 10px;
+}
+
+.navbar-user  a img{
+  border-radius: 50%;
+  height: 8vh;
+  object-fit: cover
+}
+
+.navbar-user{
+  margin:  0px 5px;
+  background-color: white;
+}
+
+.navbar-user a{
+  margin: 0px 10px;
+}
+
+.icon {
+  display: none;
+  font-size: 30px;
+  color: #04107a
+}
+
+.user_not_authenticated{
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar .user_not_authenticated a{
+  color: #04107a;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.navbar .user_not_authenticated a:hover{
+  color: gray;
+}
+
+@media only screen and (max-width: 768px) {
+  .nav_menu li a {
+    display: none;
+  }
+  .navbar-user {
+    display: none;
+  }
+
+  .icon{
+    display: block;
+  }
+
+  .user_not_authenticated{
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .navbar.responsive{
+    position: relative;
+  }
+  .navbar.responsive.icon{
+    position: absolute;
+    right:0;
+    top:0;
+
+  }
+
+  .navbar.responsive .nav_menu li a {
+    display: block;
+
+  }
+
+  .navbar.responsive .nav_menu {
+    position: absolute ;
+    right: 0vh;
+    top: 30vh;
+    width: 40%;
+    flex-direction: column;
+    /* padding-left: 10px; */
+    padding: 0 !important;
+    text-align: center;
+  }
+  .navbar.responsive .navbar-user {
+    display: block;
+    position: absolute ;
+    right: 0vh;
+    top: 15vh;
+    margin-right: 0px;
+    height: 15vh;
+    width: 40%;
+    padding-left:5%;
+  }
+
+  .navbar.responsive .user_not_authenticated{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    flex-direction: column;
+    text-align:center;
+    right: 0vh;
+    top: 15vh;
+    margin-right: 0px;
+    height: 15vh;
+    width: 40%;
+    padding-left:5%;
+    background-color: white;
+    padding: 0 !important;
+  }
+
+  .navbar.responsive .user_not_authenticated p{
+    margin: 0;
+  }
+
+
+
+}
+
+
+/* FOOTER */
+.footer{
+  position: absolute;
+  bottom: 0;
+  background-color: #194582;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 20vh;
+  padding: 3vh;
+
+}
+
+.footer p{
+  font-size: 35px;
+  font-weight: 500;
+  margin: 0px
+}
+
+.footer .foot_pages{
+  display: flex;
+
+}
+
+.footer .foot_pages a{
+  text-decoration: none;
+  color: white;
+  margin: 0 10px;
+
+}
+
+.logo_social{
+  display: inline-block;
+}
+
+.logo_social a img{
+  width: 35px;
+  margin: 5px 5px;
+}
+
+.iconos {
+  margin-top: 5px;
+  font-size: 5px;
+}
+
+/* FEED SECTION  */
+.mySlides {display: none}
+
+.mySlides img {
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  filter: brightness(48%);}
+
+.slideshow-container {
+  max-width: 100%;
+  position: relative;
+  margin: auto;
+  z-index: 0;
+}
+
+.mySlides .text {
+  color: #f2f2f2;
+  font-size: 60px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 50%;
+  right: 25%;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px black;
+}
+
+/* Hace el texto mas pequeño en movil  */
+@media only screen and (max-width: 768px) {
+
+.mySlides .text {
+    font-size: 30px;
+    right: 0%;
+    font-weight: bold;
+    bottom: 55%;
+  }
+
+}
+
+/* Animacion de fade  */
+.fade_effect {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* WELCOME PART */
+
+.welcome-feed video{
+  width: 75%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+/* PORTADA HATHA  */
+
+.portada{
+  font-size: 20px;
+  display: flex;
+}
+
+.portada img{
+  padding: 15px;
+  object-fit: cover;
+  border: 1px solid gray;
+  box-shadow: -2px 3px 5px gray;
+  margin-left: 5px;
+  width: 50%;
+}
+
+@media only screen and (max-width: 768px) {
+
+  .portada{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .portada img{
+    width: 80%;
+
+  }
+
+
+}
+
+/* MEMBESHIP SECTION  */
+.membership{
+  background-color: #194582;
+  color: white;
+  /* height: 70vh; */
+}
+
+.card_container{
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-around;
+
+}
+
+
+
+.memebership_cards{
+  width: 25%;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  padding: 10px;
+  text-align: center;
+}
+
+.membership_text{
+  font-size: 20px;
+}
+
+.membership_cost{
+  color: #2a99fa;
+  font-size: 40px;
+  margin: 0;
+}
+
+.memebership_cards button{
+  border-radius: 10px;
+  background-color: #1aad35;
+  padding: 5px;
+  border: none;
+}
+.memebership_cards button a{
+  text-decoration: none;
+  color: white;
+}
+
+.memebership_cards button:hover{
+  background-color: #f2faf8;
+}
+
+.memebership_cards button:hover #membership_but_payment{
+  color: #111212 !important;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+
+  .card_container{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .memebership_cards{
+    width: 80%;
+    margin-top: 5%;
+  }
+  .membership h3{
+    text-align: center;
+  }
+
+}
+
+
+
+/* ONLINE CLASES */
+
+.online_clases{
+  background-image: linear-gradient(to right, rgba(44, 80, 199, 1.0), rgba(0, 0, 0, 0)), url('../img/online_clasess.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 70vh;
+  background-position: 50% 70%;
+  padding: 10px;
+  padding-left: 20px;
+  color: white;
+  padding-top: 20px;
+  font-size: 20px;
+}
+
+.online_clases button{
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+/* CLASES DE YOGA COMPLETAS */
+
+.class_benefition_cards{
+
+}
+
+.yoga_class_content{
+  border: 1px solid #AARRGGBB;
+  margin: 0px 10px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  box-shadow: 5px 5px  8px #161515;
+  height: 40vh;
+  width: 25vw;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yoga_class_content .clases_card_title{
+  text-align: center;
+  color: #2a99fa;
+  font-weight: 400;
+}
+
+.yoga_class_content img{
+  height: 15vh;
+  width: 10vw;
+}
+
+@media only screen and (max-width: 768px) {
+  .class_benefition_cards h2{
+    font-size: 35px ;
+  }
+  .class_benefition_cards .card_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .yoga_class_content{
+    width: 80vw;
+    margin-top: 5%;
+    text-align: center;
+  }
+  .yoga_class_content img{
+    height: 15vh;
+    width: 100%;
+    object-fit: contain;
+  }
+
+}
+
+
+/* BENEFICIOS DEL YOGA */
+.beneficios_yoga{
+  text-align: center;
+}
+
+
+.benefits_cards{
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+
+.benefit_cards_des{
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.benefit_card_item img{
+  width: 50px;
+}
+
+.benefit_card_center img{
+  width: 20vw;
+  height: 60vh;
+}
+
+.benefit_card_item{
+  /* border: 1px solid red; */
+}
+
+.benefit_card_item:nth-of-type(1){
+  grid-column: 1/ span 3;
+}
+
+.benefit_card_item:nth-of-type(5){
+  grid-row: 2 / span 3;
+  grid-column: 2 / 3;
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .benefit_card_item{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .benefit_card_center img{
+    width: 80%;
+    height: inherit;
+    object-fit: contain;
+  }
+
+  .benefit_cards_des{
+    display: grid;
+    grid-template-columns: 80%;
+    grid-template-rows: repeat(11, 1fr);
+    grid-gap: 10px;
+  }
+
+  .benefit_card_item:nth-of-type(1){
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .benefit_card_item:nth-of-type(5){
+    grid-row: 5;
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    height: 25vh;
+  }
+
+}
+
+
+/* TOMAR CLASES  */
+
+#tomar_una_clase{
+  background: #37393d;
+  color: white;
+  padding: 3%;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#tomar_una_clase button{
+  /* height: 30px; */
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#tomar_una_clase a{
+  text-decoration: none;
+  color: #2a99fa;
+}
+
+
+/* video_list */
+
+.video-list-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.video_list_menu{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.category_box{
+
+}
+
+.category_element:hover{
+  background-color: #0d39a8;
+}
+
+.category_element:hover li{
+  color: white;
+}
+
+.video_container{
+  width: 70%
+  /* text-align: center; */
+
+  /* height: 70vh; */
+}
+
+.video_description{
+  /* height: 30%; */
+}
+
+.video_container video{
+  width: 100%;
+  height: 50vh;
+  margin: 15px 0px;
+}
+
+.video_list_img_container {
+  position: relative;
+  text-align: center;
+  color: white;
+  font-weight: 20px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.videos_list_center_text {
+  position: absolute;
+  font-size: 25px;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+
+.video_container h3{
+  margin:0;
+  text-align: center;
+}
+.video_container .video_description{
+  padding-left: 5px;
+}
+
+
+
+
+
+
+#Video_list_displayer {
+   margin-top: 3%;
+}
+
+
+#Video_list_displayer ul{
+   overflow: auto;
+   height: 40vh;
+   width: 15vw
+}
+
+#Video_list_displayer ul li a {
+   color: #0d39a8;
+}
+#Video_list_displayer ul li a:hover {
+   color: gray;
+}
+
+#video_list_line{
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .video-list-container{
+    display: flex;
+    flex-direction: column;
+    padding: 0  !important;
+    align-items: center !important;
+    width: 100%;
+  }
+  #video_list_line{
+    display: block;
+  }
+
+
+
+  .video_list_menu{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .video_container {
+    order:2;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    width: 100%;
+    /* height: 70%; */
+    padding: 0  !important;
+  }
+
+  .video_container video{
+    width: 100%;
+    height: 70%;
+    margin: 0;
+  }
+  #Video_list_displayer {
+    order:1;
+    padding: 0 !important;
+    margin: 0;
+    width: 90%;
+  }
+
+  #Video_list_displayer ul{
+     overflow: auto;
+     height: 18vh;
+     width: 100%;
+     margin: 0;
+     text-align: center;
+     border-radius: 5px;
+     /* border: 1px solid black; */
+  }
+  #Video_list_displayer ul li a{
+     font-size: 20px;
+  }
+
+  .videos_list_center_text {
+    font-size: 100%;
+  }
+
+  .video_description{
+    padding: 15px !important;
+  }
+
+}
+
+/* //payment_style */
+
+
+.card_container_payments img{
+  width: 100%;
+  height: 20vh;
+  object-fit: cover;
+}
+
+
+
+.payment_container{
+  display: flex;
+  justify-content: space-around;
+}
+
+@media only screen and (max-width: 768px) {
+  .payment_container{
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+/* profile update view boxes  */
+#profile_subs_box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#profile_subs_box figure{
+  width: 20vw;
+}
+
+#profile_subs_box figure img{
+  width: inherit;
+}
+
+#blog_text  p{
+  text-align: left ;
+}
+
+/* Reset password templates  */
+
+#container_reset i {
+    margin-left: -30px;
+    cursor: pointer;
+}
+
+
+/* CONTACT PAGE  */
+
+.page-section{
+  /* height: 60.8vh; */
+}
+
+/* BLOG-POST SECTION */
+
+.pages_blog{
+
+}
+
+.page-section{
+
+}
+
+/* SIGN_UP SECTION  */
+
+.errorlist{
+  background-color: #ed5163;
+  border-radius: 10px;
+}
+.errorlist li{
+
+  color: white;
+}

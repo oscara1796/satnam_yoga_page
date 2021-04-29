@@ -26,7 +26,7 @@ class Video(models.Model):
 
     image = models.ImageField(upload_to="user_images/", verbose_name= "Imagen", blank= True);
     categories= models.ManyToManyField(Category, verbose_name="Categorias")
-    upload = models.FileField(upload_to='video_uploads/', default='default_value', verbose_name= "Archivo")
+    upload = models.TextField(verbose_name= "Vimeo embeded")
     description = RichTextField(verbose_name="Contenido")
     free_seen= models.BooleanField(default=False, null=False, verbose_name= "Muestra gratis")
     created = models.DateTimeField(auto_now_add= True);

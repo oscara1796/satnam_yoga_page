@@ -10,7 +10,7 @@ class Paypal(models.Model):
     SKU = models.CharField(max_length=100, verbose_name= "SKU", blank=True, null= True)
     name = models.CharField(max_length=100, verbose_name= "Plan ", blank=True, null= True)
     description = models.TextField(verbose_name= "Descripción", blank=True, null= True)
-    paypalPlanId = models.CharField(max_length=255, verbose_name= "Paypal Subscripción id", blank=True, null= True)
+    paypalPlanId = models.CharField(max_length=255, verbose_name= "Paypal plan id", blank=True, null= True)
     image= models.ImageField(verbose_name="Imagen", upload_to='plans', null= True)
 
     created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");

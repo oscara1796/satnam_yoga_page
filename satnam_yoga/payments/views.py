@@ -43,15 +43,15 @@ def paypal_handle(request):
     OBJ request
     """
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         user = request.user
         session = request.POST.get('details')
         session = json.loads(session)
-        print('session: ', str(session))
+        # print('session: ', str(session))
         profile_exists= Profile.objects.filter(user=user).exists()
         if not profile_exists:
-            print(session['subscriptionID'])
-            print(session['plan_id'])
+            # print(session['subscriptionID'])
+            # print(session['plan_id'])
             Profile.objects.create(
                 user=user,
                 paypalSubscriptionId= session['subscriptionID'],
@@ -73,7 +73,7 @@ def HomePagePaymentView(request):
     para traer la un token y traer la info del plan
     OBJ request
     """
-    print(request.user)
+    # print(request.user)
     red_value=paypal_handle(request)
     if red_value:
         return redirect('update_profile')
@@ -100,7 +100,7 @@ def HomePagePaymentView(request):
         elif customer.paypalSubscriptionId and customer.paypalPlanId:
             access_token = get_paypal_token()
             headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-            url = f'https://api-m.sandbox.paypal.com/v1/billing/plans/{customer.paypalPlanId}'
+            url = f'https://api-m.paypal.com/v1/billing/plans/{customer.paypalPlanId}'
             r = requests.get(url, headers=headers).json()
             current_plan = None
             for plan in paypal_plans:
@@ -109,8 +109,8 @@ def HomePagePaymentView(request):
             subs_price =r['billing_cycles'][0]['pricing_scheme']['fixed_price']
 
             product= {'name': r['name'], 'price': subs_price['value'], 'type': current_plan.name, 'description': current_plan.description, 'images': [current_plan.image.url]}
-            print(current_plan.image.url)
-            url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+            # print(current_plan.image.url)
+            url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
             subscription = requests.get(url, headers=headers).json()
 
 
@@ -178,8 +178,8 @@ def suspend_paypal_View(request):
     access_token = get_paypal_token()
 
     headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-    url2 = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/suspend'
-    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+    url2 = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/suspend'
+    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
     subscription = requests.get(url, headers=headers).json()
     date_format = '%Y-%m-%dT%H:%M:%SZ'
     last_payment = subscription["billing_info"]["last_payment"]["time"]
@@ -214,7 +214,7 @@ def reactivate_paypal_View(request):
     access_token = get_paypal_token()
 
     headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/activate'
+    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/activate'
 
     requests.post(url, headers=headers)
     customer.active = statusChoices.ACTIVE
@@ -222,7 +222,7 @@ def reactivate_paypal_View(request):
     customer.save()
     timestamp= customer.paypal_cancel_date
 
-    url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
     subscription = requests.get(url, headers=headers).json()
 
     return redirect('payment_home')
@@ -347,8 +347,8 @@ def stripe_webhook(request):
 
     if event['type'] == 'customer.subscription.deleted':
         session = event['data']['object']
-        print('CUSTOMER CANCELLED: ')
-        print(session)
+        # print('CUSTOMER CANCELLED: ')
+        # print(session)
 
         stripe_customer_id = session.get('customer')
         profile_exists= Profile.objects.filter(stripeCustomerId=stripe_customer_id).exists()
@@ -386,11 +386,12 @@ def webhook_paypal(request):
         resource= obj.get('resource')
 
         if event_type == 'PAYMENT.SALE.COMPLETED':
+            pass
             # print(resource)
             # subs_id_paypal = resource['billing_agreement_id']
             # print('Se pago una suscripción al final y funciona esta madre')
         if event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
-            print(resource)
+            # print(resource)
             subs_id_paypal = resource['id']
             profiles = Profile.objects.filter(paypalSubscriptionId=subs_id_paypal)
             profile = profiles[0]
@@ -398,10 +399,11 @@ def webhook_paypal(request):
                 profile.paypal_cancel_date = timezone.now() - timezone.timedelta(days=2)
                 profile.active = statusChoices.TRIAL
                 profile.save()
-                print('su date es none ')
-            print('PROFILE: ', profile)
-            print('Subscripción suspendida ')
+                # print('su date es none ')
+            # print('PROFILE: ', profile)
+            # print('Subscripción suspendida ')
         if event_type == 'BILLING.SUBSCRIPTION.ACTIVATED':
+            pass
             # print(resource)
             # print('Subscripción activada ')
     return HttpResponse(status=200)
