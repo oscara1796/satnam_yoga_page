@@ -47,12 +47,10 @@ pygame==2.0.1
 pyglet==1.5.14
 pylint==2.6.0
 pyOpenSSL==20.0.1
-pypiwin32==223
 python-dateutil==2.8.1
 python-jsonrpc-server==0.4.0
 python-language-server==0.36.2
 pytz==2020.5
-pywin32==300
 ratelimit==2.2.1
 requests==2.25.1
 rope==0.18.0
