@@ -1,1 +1,1 @@
-web: gunicorn satnam_yoga.wsgi --log-file -
+web:gunicorn satnam_yoga.wsgi --log-file -
