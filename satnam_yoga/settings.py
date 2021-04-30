@@ -25,7 +25,7 @@ SECRET_KEY = '9$xjmaxhvb8b-^i(^l#rt^y4vnphw8zk5m2d+kowly=i=gu8s@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com', 'satnamyogaestudio.com', 'www.satnamyogaestudio.com']
 
 
 # Application definition
