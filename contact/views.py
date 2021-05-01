@@ -24,7 +24,7 @@ def contact(request):
             ['oscara1706cl@gmail.com', settings.DEFAULT_FROM_EMAIL]
             )
             try:
-                email.send()
+                email.send(fail_silently=False)
                 return redirect(reverse('contact')+'?ok')
             except:
                 return redirect(reverse('contact')+'?fail')

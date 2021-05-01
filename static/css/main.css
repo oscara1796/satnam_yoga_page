@@ -5,7 +5,7 @@ html{
 }
 
 body{
-  background-color: white;
+  background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -27,14 +27,14 @@ body{
   display: flex;
   position: fixed;
   z-index: 1;
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 .nav_menu{
   list-style: none;
   display: flex;
   margin: 0;
-  background-color: white;
+  background-color: #FFFFFF;
 
 }
 
@@ -67,7 +67,7 @@ body{
 
 .navbar-user{
   margin:  0px 5px;
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 .navbar-user a{
@@ -162,7 +162,7 @@ body{
     height: 15vh;
     width: 40%;
     padding-left:5%;
-    background-color: white;
+    background-color: #FFFFFF;
     padding: 0 !important;
   }
 
@@ -180,7 +180,7 @@ body{
   position: absolute;
   bottom: 0;
   background-color: #194582;
-  color: white;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,7 +204,7 @@ body{
 
 .footer .foot_pages a{
   text-decoration: none;
-  color: white;
+  color: #FFFFFF;
   margin: 0 10px;
 
 }
@@ -241,11 +241,11 @@ body{
 
 .mySlides .text {
   color: #f2f2f2;
-  font-size: 60px;
+  font-size: 80px;
   padding: 8px 12px;
   position: absolute;
   bottom: 50%;
-  right: 25%;
+  right: 0%;
   width: 100%;
   text-align: center;
   font-weight: bold;
@@ -325,7 +325,7 @@ body{
 /* MEMBESHIP SECTION  */
 .membership{
   background-color: #194582;
-  color: white;
+  color: #FFFFFF;
   /* height: 70vh; */
 }
 
@@ -340,7 +340,7 @@ body{
 
 .memebership_cards{
   width: 25%;
-  background-color: white;
+  background-color: #FFFFFF;
   border-radius: 10px;
   color: black;
   padding: 10px;
@@ -365,7 +365,7 @@ body{
 }
 .memebership_cards button a{
   text-decoration: none;
-  color: white;
+  color: #FFFFFF;
 }
 
 .memebership_cards button:hover{
@@ -407,7 +407,7 @@ body{
   background-position: 50% 70%;
   padding: 10px;
   padding-left: 20px;
-  color: white;
+  color: #FFFFFF;
   padding-top: 20px;
   font-size: 20px;
 }
@@ -558,7 +558,7 @@ body{
 
 #tomar_una_clase{
   background: #37393d;
-  color: white;
+  color: #FFFFFF;
   padding: 3%;
   font-size: 20px;
   display: flex;
@@ -601,7 +601,7 @@ body{
 }
 
 .category_element:hover li{
-  color: white;
+  color: #FFFFFF;
 }
 
 .video_container{
@@ -624,7 +624,7 @@ body{
 .video_list_img_container {
   position: relative;
   text-align: center;
-  color: white;
+  color: #FFFFFF;
   font-weight: 20px;
   font-weight: bold;
   width: 100%;

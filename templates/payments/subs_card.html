@@ -14,7 +14,7 @@
           {{ product.description }}
         </p>
         {% if not subscription  %}
-        <button type="submit" class="submitBtn mb-4 btn btn-primary" id="submitBtn" value="{{product.price_id}}" onclick="give_value_session_id(this)">Subscribe</button>
+        <button type="submit" class="submitBtn mb-4 btn btn-primary" id="submitBtn" value="{{product.price_id}}" onclick="give_value_session_id(this)">Subscríbete </button>
         <div id="{{product.id}}"></div>
         <form class="paypal-form"  method="post" action="">
           {% csrf_token %}
