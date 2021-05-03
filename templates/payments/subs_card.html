@@ -23,8 +23,8 @@
         {% elif  subscription.status == 'ACTIVE' and profile.paypalSubscriptionId == subscription.id %}
         <p> Subscripción de paypal </p>
         <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "suspend_paypal_sub" %}'>Cancelar Subscripción</a></button>
-        {% elif  profile.active == 'ACTIVO' %}
-        <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Cancelar</a></button>
+        {% elif  profile.active == 'statusChoices.ACTIVE' %}
+        <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Cancelar Subscripción</a></button>
         {% elif  subscription.status == 'SUSPENDED' and profile.paypalSubscriptionId == subscription.id %}
         <p>Si tu periodo de pago no ha terminado puedes volver a activar tu subscripción para poder continuar con los beneficios</p>
         <p>Tu periodo termina el {{profile.paypal_cancel_date}}</p>
