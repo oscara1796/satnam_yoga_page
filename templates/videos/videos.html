@@ -41,16 +41,29 @@
 </section>
 
 <script type="text/javascript">
-  console.log("hola")
-  var video_parent = document.getElementById("video_father_container");
-  console.log(video_parent)
-  var children= video_parent.children
-  var video_list_menu=  children[1]
-  var video_container = video_list_menu.children[0]
-  if(video_container.children.length == 0){
+  window.onload = function() {
 
-    video_list_menu.style.display = "none"
+    var videos = document.getElementsByClassName("video_list_menu");
+         for (i = 0; i < videos.length; i++) {
+             if (videos[i].id == {{category.id}} ) {
+                  videos[i].style.display= "flex"
+             } else{
+                videos[i].style.display= "none"
+             }
+         }
+
   }
+  // console.log("hola")
+  // var video_parent = document.getElementById("video_father_container");
+  // console.log(video_parent)
+  // var children= video_parent.children
+  // var video_list_menu=  children[1]
+  // var video_container = video_list_menu.children[0]
+  // if(video_container.children.length == 0){
+  //
+  //   video_list_menu.style.display = "none"
+  // }
+
 
 
 
