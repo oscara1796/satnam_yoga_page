@@ -15,6 +15,59 @@
     <script
     src="https://www.paypal.com/sdk/js?client-id=AUPzUZNqLg2hEQ4tJUb-tpQIxk7zZtLfi5LvsacyyP46L4VQgBkgy2C6uVJHVk5LLFNMR_TE5cUA7llg&currency=MXN&vault=true"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
     </script>
+    <script >
+    console.log('sanity check');
+
+
+        window.onload = function() {
+          var videos = document.getElementsByClassName("video_list_menu");
+               for (i = 0; i < videos.length; i++) {
+                   if (videos[i].id == {{category.id}} ) {
+                        videos[i].style.display= "flex"
+                   } else{
+                      videos[i].style.display= "none"
+                   }
+               }
+        plusSlides(1);
+        }
+
+        window.setInterval(function(){
+        plusSlides(1);
+        }, 15000);
+
+        function myFunction() {
+          var x = document.getElementById('main-navbar');
+          if (x.className === "navbar"){
+            x.className += " responsive";
+          } else {
+            x.className = "navbar";
+          }
+          console.log(x.className)
+        }
+
+        // FEED
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+          showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        // console.log(slides)
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex-1].style.display = "block";
+      }
+
+
+
+    </script>
   </head>
 
 
@@ -29,54 +82,8 @@
     </div>
     {% include "store/footer.html" %}
 
-    <script>
-      function myFunction() {
-        var x = document.getElementById('main-navbar');
-        if (x.className === "navbar"){
-          x.className += " responsive";
-        } else {
-          x.className = "navbar";
-        }
-        console.log(x.className)
-      }
-
-      // FEED
-      var slideIndex = 1;
-      showSlides(slideIndex);
-
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-
-      function showSlides(n) {
-      var i;
-      var slides = document.getElementsByClassName("mySlides");
-      // console.log(slides)
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-      }
-      slides[slideIndex-1].style.display = "block";
-    }
-
-
-    window.setInterval(function(){
-    plusSlides(1);
-    }, 15000);
 
 
 
-
-  </script>
-  <script>
-  $(document).ready(function() {
-     $('video').bind('contextmenu',function(){
-         return false;
-         });
-  } );
-  </script>
-  <script type="text/javascript" src="{% static  "js/user_menu.js" %}">
-  </script>
   </body>
 </html>

@@ -16,44 +16,28 @@
       <h3 class="">Categorías:</h3>
         <ul class="m-0 p-0" style="width: inherit">
           {% for category in categories_content %}
-          <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" href="{% url 'category' category.id %}"><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a>
+          <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" onclick="make(event)" href="{% url 'category' category.id %}"><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a>
+          <!-- video  -->
+            <div  id="{{category.id}}" class="video_list_menu" >
+                <div class="video_container">
+                  {% include "videos/video_card.html" %}
+                </div>
+                <div class="" id="Video_list_displayer">
+                    <hr id="video_list_line">
+                      <ul style="width: 100%;">
+
+                        {% for video in category.video_set.all %}
+                        <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" href="{% url 'video_id_show' category.id video.id %}">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li>
+                        {% endfor %}
+                      </ul>
+                </div>
+            </div>
+            <!-- video  -->
           {% endfor %}
         </ul>
   </div>
 
-  <div class="video_list_menu">
-    <div class="video_container">
-      {% include "videos/video_card.html" %}
-    </div>
-    <div class="" id="Video_list_displayer">
-        <hr id="video_list_line">
-          <ul style="width: 100%;">
-            <!-- <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li>
-            <li>prueba</li> -->
-            {% for video in category.video_set.all %}
-            <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" href="{% url 'video_id_show' category.id video.id %}">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li>
-            {% endfor %}
-          </ul>
-    </div>
-  </div>
+
 </section>
 
 <script type="text/javascript">
@@ -64,9 +48,11 @@
   var video_list_menu=  children[1]
   var video_container = video_list_menu.children[0]
   if(video_container.children.length == 0){
-    console.log("Hola")
+
     video_list_menu.style.display = "none"
   }
+
+
 
 </script>
 

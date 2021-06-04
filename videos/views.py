@@ -47,7 +47,7 @@ def category(request, category_id ):
         if customer.paypalSubscriptionId:
             access_token = get_paypal_token()
             headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-            url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+            url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
             subscription = requests.get(url, headers=headers).json()
             subscription['status'] =  subscription['status'].lower()
             print('status: ', subscription['status'])
@@ -73,10 +73,9 @@ def video_id_show(request, category_id, video_id):
         if customer.paypalSubscriptionId:
             access_token = get_paypal_token()
             headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-            url = f'https://api-m.sandbox.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
+            url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
             subscription = requests.get(url, headers=headers).json()
             subscription['status'] =  subscription['status'].lower()
-            print(subscription['status'])
         else:
             stripe.api_key = settings.STRIPE_SECRET_KEY
             subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
@@ -88,7 +87,9 @@ def video_id_show(request, category_id, video_id):
         'video': video,
         'subscription': subscription
         })
-    except Exception:
+    except Exception as e:
+        print(e)
+        print("Hello")
         return render(request, 'videos/videos.html', {
         "category": category,
         'categories_content': categories_content,
