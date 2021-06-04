@@ -43,14 +43,12 @@ def category(request, category_id ):
     subscription= None
     try:
         customer = Profile.objects.get(user=request.user)
-        print("TEST")
         if customer.paypalSubscriptionId:
             access_token = get_paypal_token()
             headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
             url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
             subscription = requests.get(url, headers=headers).json()
             subscription['status'] =  subscription['status'].lower()
-            print('status: ', subscription['status'])
         else:
             stripe.api_key = settings.STRIPE_SECRET_KEY
             subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
