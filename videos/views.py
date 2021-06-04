@@ -31,7 +31,7 @@ def list_menu(request):
 def categories_list(request):
 
     categories_content = Category.objects.all()
-    print(categories_content)
+    # print(categories_content)
 
     return render(request, 'videos/videos.html', {'categories_content': categories_content})
 

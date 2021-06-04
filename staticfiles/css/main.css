@@ -585,11 +585,16 @@ body{
   flex-direction: column;
 }
 
-.video_list_menu{
+.show{
   display: flex;
+}
+
+.video_list_menu{
+  display: none;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+
 }
 
 .category_box{
@@ -690,10 +695,11 @@ body{
 
 
   .video_list_menu{
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 100%;
     margin-bottom: 30px;
+    visibility: hidden;
   }
 
   .video_container {
