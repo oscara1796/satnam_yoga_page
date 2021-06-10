@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'BruteBuster.middleware.RequestMiddleware',
     'satnam_yoga.middleware.profile_payment_completion_middleware',
-    'satnam_yoga.middleware.user_profile_completion_middleware',
+    # 'satnam_yoga.middleware.user_profile_completion_middleware',
     'satnam_yoga.middleware.user_profile_paypal_account_verify_is_active_middleware'
 ]
 
