@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 from pathlib import Path
 import os
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9$xjmaxhvb8b-^i(^l#rt^y4vnphw8zk5m2d+kowly=i=gu8s@'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,9 +97,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'NAME': 'satnam',
+        # 'NAME': 'dbsatnam',
         'USER': 'oscar',
+        # 'USER': 'root',
         'PASSWORD': os.environ.get('DB_PASS_SATNAM'),
         'HOST':  os.environ.get('DB_HOST_SATNAM'),
+        # 'PASSWORD': 'toor',
+        # 'HOST':  'localhost',
         'PORT': '3306',
     }
 }
