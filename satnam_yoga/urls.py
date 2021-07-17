@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views as satnam_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('.well-known/pki-validation/E418E9768C32CF77F5A45100D28DDE3B.txt', satnam_views.serveFile, name="serveFile"),
     path('', include('store.urls')),
     path('', include('users.urls')),
     path('', include('videos.urls')),
