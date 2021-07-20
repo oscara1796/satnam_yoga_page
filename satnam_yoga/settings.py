@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', 'https://satnamyoga.herokuapp.com', 'www.satnamyogaestudio.com', 'satnamyogaestudio.com', '127.0.0.1']
 
 
 # Application definition
@@ -217,7 +217,7 @@ AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY_SATNAM')
 AWS_STORAGE_BUCKET_NAME='satnam-bucket'
 
 
-#if os.getcwd() == '/app':
-#SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT= True
-#DEBUG= False
+if os.getcwd() == '/app':
+    SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT= True
+    DEBUG= False
