@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com', 'satnamyogaestudio.com', 'www.satnamyogaestudio.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com', 'satnamyogaestudio.com', 'www.satnamyogaestudio.com', '*']
 
 
 # Application definition
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'BruteBuster.middleware.RequestMiddleware',
     'satnam_yoga.middleware.profile_payment_completion_middleware',
     # 'satnam_yoga.middleware.user_profile_completion_middleware',
-    'satnam_yoga.middleware.user_profile_paypal_account_verify_is_active_middleware'
+    # 'satnam_yoga.middleware.user_profile_paypal_account_verify_is_active_middleware'
 ]
 
 ROOT_URLCONF = 'satnam_yoga.urls'
