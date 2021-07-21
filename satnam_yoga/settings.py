@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 from pathlib import Path
 import os
 from django.core.management.utils import get_random_secret_key
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -221,3 +222,5 @@ if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT= True
     DEBUG= False
+
+django_heroku.settings(locals())
