@@ -218,9 +218,12 @@ AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY_SATNAM')
 AWS_STORAGE_BUCKET_NAME='satnam-bucket'
 
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER=('HTTP_X_FORWARDED_PROTO', 'https')
     SECURE_SSL_REDIRECT= True
     DEBUG= False
+
 
 django_heroku.settings(locals())
