@@ -15,6 +15,7 @@ from payments.views import get_paypal_token
 # Create your views here.
 
 def list_menu(request):
+    user= request.user
     stripe.api_key = settings.STRIPE_SECRET_KEY
     month_subs_price= stripe.Price.retrieve(settings.STRIPE_PRICE_ID)
     firts_video =  None
@@ -25,7 +26,7 @@ def list_menu(request):
     except:
         pass
 
-    return render(request, 'videos/feed.html', {'price_subs_month': "{0:.2f}".format(round(float(month_subs_price.unit_amount /100),3)), "firts_video": firts_video, "category": category})
+    return render(request, 'videos/feed.html', {'price_subs_month': "{0:.2f}".format(round(float(month_subs_price.unit_amount /100),3)), "firts_video": firts_video, "category": category,"user": user})
 
 
 def categories_list(request):
@@ -54,7 +55,6 @@ def category(request, category_id ):
             subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content, 'subscription': subscription})
     except Exception as e:
-        print(e)
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content})
 
 
@@ -86,8 +86,6 @@ def video_id_show(request, category_id, video_id):
         'subscription': subscription
         })
     except Exception as e:
-        print(e)
-        print("Hello")
         return render(request, 'videos/videos.html', {
         "category": category,
         'categories_content': categories_content,

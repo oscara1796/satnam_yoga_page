@@ -13,9 +13,9 @@
       <li><a href="{% url "contact" %}">Contacto</a></li>
     </ul>
 
-    {% if request.user.is_authenticated %}
+    {% if user.is_authenticated %}
       <div id="nav-user" class="navbar-user ml-auto">
-        {% if request.user.profile.image %}
+        {% if user.profile.image %}
             <a href="{% url 'update_profile' %}"><img src="{{request.user.profile.image.url}}" alt=""></a>
         {% else%}
             <a href="{% if request.user.profile %}{% url 'update_profile' %}{% else %}{% url 'payment_home' %}{% endif %}"><img src="{% static 'img/default-profile.png' %}" class="rounded-circle" height="50" /></a>
