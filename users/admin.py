@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 #My imports
-from users.models import Profile
+from users.models import Profile, YogaClass, DayClass
 
 # Register your models here.
 
@@ -80,6 +80,16 @@ class UserAdmin(BaseUserAdmin):
     'is_active',
     'is_staff'
     )
+
+
+
+class YogaClassAdmin(admin.ModelAdmin):
+    readonly_fields= ('created', 'modified')
+    list_display = ('pk','name', 'hour','class_days')
+    search_fields= ('name',)
+
+    def class_days(self, obj):
+        return ', '.join([c.name for c in obj.dayclass_set.all().order_by('name') ])
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

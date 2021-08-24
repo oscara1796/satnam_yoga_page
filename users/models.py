@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 from enum import Enum
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -50,3 +51,38 @@ def mymodel_delete(sender, instance, **kwargs):
         instance.image.delete(False)
     except:
         pass
+
+
+class YogaClass(models.Model):
+    image = models.ImageField(upload_to="class_images/", verbose_name= "Imagen");
+    name = models.CharField(max_length=200, verbose_name= "Nombre de la clase")
+    hour = models.TimeField()
+    description = RichTextField(verbose_name="Descripción")
+    created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");
+    modified = models.DateTimeField(auto_now= True, verbose_name= "Modificado");
+    class Meta:
+        verbose_name= "Clase"
+        verbose_name_plural= "Clases"
+        ordering= ['-created']
+
+    def __str__(self):
+        """return class name!"""
+        return self.name
+
+class DayClass(models.Model):
+    DAYS_CHOICES = (
+        ('lunes', 'Lunes'),
+        ('martes', 'Martes'),
+        ('Miercoles', 'Miércoles'),
+        ('jueves', 'Jueves'),
+        ('viernes', 'Viernes'),
+        ('sabado', 'Sabado'),
+        ('domingo', 'Domingo'),
+    )
+    name = models.CharField(max_length=50, verbose_name= "Día", choices=DAYS_CHOICES)
+    categories= models.ManyToManyField(YogaClass, verbose_name="clases")
+    created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");
+    modified = models.DateTimeField(auto_now= True, verbose_name= "Modificado");
+    def __str__(self):
+        """return day name!"""
+        return self.name

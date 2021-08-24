@@ -18,7 +18,7 @@
           <div class="video_description">{{video.description|safe}}</div>
         {% else %}
           <div class="video_list_img_container">
-              <img src="{% static "img/video-placeholder.png" %}" alt="" style="width:100%;">
+              <img src="{% if video.image %} {{video.image.url}}{% else %}{% static "img/video-placeholder.png" %}{% endif %}" alt="" style="width:100%; filter: brightness(40%);">
               <p class="videos_list_center_text"><a href="{% url "payment_home" %}">Suscríbete</a> para poder reproducir el video</p>
           </div>
         {% endif %}
@@ -36,7 +36,7 @@
     <div class="video_description">{{video_content.first.description|safe}}</div>
     {% else %}
       <div class="video_list_img_container">
-          <img src="{% static "img/video-placeholder.png" %}" alt="" style="width:100%;">
+          <img src="{% if video_content.first.image %} {{video_content.first.image.url}}{% else %}{% static "img/video-placeholder.png" %}{% endif %}" alt="" style="width:100%; filter: brightness(40%);">
           <p class="videos_list_center_text"><a href="{% url "payment_home" %}">Suscríbete</a> para poder reproducir el video</p>
       </div>
     {% endif %}
