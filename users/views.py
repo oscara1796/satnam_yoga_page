@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # ·Models
 
-from users.models import Profile
+from users.models import Profile, YogaClass, DayClass
 from django.contrib.auth.models import User
 
 # Forms
@@ -31,6 +31,7 @@ def update_profile_view(request):
             return redirect('update_profile')
 
     return render(request, 'users/update_profile.html',{'profile': profile, 'user': user, 'form': form})
+
 
 
 
@@ -74,3 +75,9 @@ def signup_view(request):
          template_name= 'users/signup.html',
          context={'form':form}
      )
+
+
+def classes_schedule(request):
+
+
+    return render(request)

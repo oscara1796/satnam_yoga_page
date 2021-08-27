@@ -85,11 +85,23 @@ class UserAdmin(BaseUserAdmin):
 
 class YogaClassAdmin(admin.ModelAdmin):
     readonly_fields= ('created', 'modified')
-    list_display = ('pk','name', 'hour','class_days')
+    list_display = ('pk','name', 'hour_to_start', 'hour_to_end','class_days')
     search_fields= ('name',)
 
     def class_days(self, obj):
-        return ', '.join([c.name for c in obj.dayclass_set.all().order_by('name') ])
+        return ', '.join([c.name for c in obj.days.all().order_by('name') ])
+
+
+
+class DayClassAdmin(admin.ModelAdmin):
+    readonly_fields= ('created', 'modified')
+    list_display = ('pk','name', 'classes')
+    search_fields= ('name',)
+
+    def classes(self, obj):
+        return ', '.join([c.name for c in obj.yogaclass_set.all().order_by('name') ])
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(YogaClass, YogaClassAdmin)
+admin.site.register(DayClass, DayClassAdmin)
