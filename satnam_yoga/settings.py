@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY_DJANGO_SATNAM")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'satnamyoga.herokuapp.com', 'satnamyogaestudio.com', 'www.satnamyogaestudio.com', '*']
 

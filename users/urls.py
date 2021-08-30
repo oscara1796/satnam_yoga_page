@@ -8,6 +8,7 @@ urlpatterns = [
     path('users/login/', users_views.login_view, name="login"),
     path('users/logout/', users_views.logout_view, name="logout"),
     path('users/signup/', users_views.signup_view, name="signup"),
+    path('users/schedule/', users_views.classes_schedule, name= "classes_schedule"),
     path('users/me/update_profile', users_views.update_profile_view, name= "update_profile"),
 
     path('users/reset_password/',

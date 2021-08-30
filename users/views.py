@@ -78,6 +78,16 @@ def signup_view(request):
 
 
 def classes_schedule(request):
+    classes = YogaClass.objects.all().order_by('hour_to_start')
+    classes_dic = {}
+    for c in classes:
+        hour = c.hour_to_start.hour
+        try:
+            if classes_dic[hour]:
+                classes_dic[hour].append(c)
+        except:
+            classes_dic[hour] = []
+            classes_dic[hour].append(c)
+    print(classes_dic)
 
-
-    return render(request)
+    return render(request, 'users/horarios.html', {"classes_dic": classes_dic.items()})
