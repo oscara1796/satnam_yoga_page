@@ -6,43 +6,19 @@
 {% endblock %}
 
 {% block container %}
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-
-        <th scope="col">lunes</th>
-        <th scope="col">Martes</th>
-        <th scope="col">Miércoles</th>
-        <th scope="col">Jueves</th>
-        <th scope="col">Viernes</th>
-        <th scope="col">Sábado</th>
-
-      </tr>
-    </thead>
-      <tbody>
-        
-        <!-- <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr> -->
-      </tbody>
-      </table>
-
-
-
-
+  <div class="container">
+    {% for schedule in schedules %}
+      <div class="schedule">
+          <h2>{{schedule.name}}</h2>
+          <figure>
+            <img src="{{schedule.image.url}}" alt="Horario">
+          </figure>
+      </div>
+    {% endfor %}
+    <div class="contact_info">
+        <h2>Contáctanos</h2>
+        <p>Tel:+52 33-1418-3347</p>
+        <p>Email: satnamyogajal@hotmail.com</p>
+    </div>
+  </div>
 {% endblock %}

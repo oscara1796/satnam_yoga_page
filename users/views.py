@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 
 # ·Models
 
-from users.models import Profile, YogaClass, DayClass
+from users.models import Profile, Schedule
 from django.contrib.auth.models import User
 
 # Forms
@@ -78,16 +78,6 @@ def signup_view(request):
 
 
 def classes_schedule(request):
-    classes = YogaClass.objects.all().order_by('hour_to_start')
-    classes_dic = {}
-    for c in classes:
-        hour = c.hour_to_start.hour
-        try:
-            if classes_dic[hour]:
-                classes_dic[hour].append(c)
-        except:
-            classes_dic[hour] = []
-            classes_dic[hour].append(c)
-    print(classes_dic)
+    schedules = Schedule.objects.all().order_by('created')
 
-    return render(request, 'users/horarios.html', {"classes_dic": classes_dic.items()})
+    return render(request, 'users/horarios.html', {"schedules": schedules})

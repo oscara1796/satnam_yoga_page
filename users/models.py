@@ -16,7 +16,7 @@ class statusChoices(Enum):
 
 
 class Profile(models.Model):
-
+    """Perfil del usuario que avala que esta subscrito en la plataforma"""
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name= "Usuario")
 
     image = models.ImageField(upload_to="user_images/", verbose_name= "Imagen");
@@ -51,48 +51,25 @@ def mymodel_delete(sender, instance, **kwargs):
         instance.image.delete(False)
     except:
         pass
-class DayClass(models.Model):
-    DAYS_CHOICES = (
-        ('lunes', 'Lunes'),
-        ('martes', 'Martes'),
-        ('Miercoles', 'Miércoles'),
-        ('jueves', 'Jueves'),
-        ('viernes', 'Viernes'),
-        ('sabado', 'Sabado'),
-        ('domingo', 'Domingo'),
-    )
-    name = models.CharField(max_length=50, verbose_name= "Día", choices=DAYS_CHOICES)
+
+
+class Schedule(models.Model):
+    """El horario de la escuela de yoga"""
+    name = models.CharField(max_length=100, verbose_name= "Nombre");
+    image = models.ImageField(upload_to="user_images/", verbose_name= "Horario");
     created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");
     modified = models.DateTimeField(auto_now= True, verbose_name= "Modificado");
 
     class Meta:
-        verbose_name= "Día de clase"
-        verbose_name_plural= "Días de clases"
+        verbose_name= "Horario"
+        verbose_name_plural= "Horarios"
         ordering= ['-created']
 
     def __str__(self):
-        """return day name!"""
+        """return user name!"""
         return self.name
 
-class YogaClass(models.Model):
-    image = models.ImageField(upload_to="class_images/", verbose_name= "Imagen");
-    name = models.CharField(max_length=200, verbose_name= "Nombre de la clase")
-    hour_to_start = models.TimeField(null= True,verbose_name="Comienza")
-    hour_to_end = models.TimeField(null= True,verbose_name="Termina")
-    description = RichTextField(verbose_name="Descripción")
-    created = models.DateTimeField(auto_now_add= True, verbose_name= "creado");
-    days= models.ManyToManyField(DayClass, verbose_name="días de clase")
-    modified = models.DateTimeField(auto_now= True, verbose_name= "Modificado");
-    class Meta:
-        verbose_name= "Clase"
-        verbose_name_plural= "Clases de yoga"
-        ordering= ['-created']
-
-    def __str__(self):
-        """return class name!"""
-        return self.name
-
-@receiver(pre_delete, sender=YogaClass)
+@receiver(pre_delete, sender=Schedule)
 def mymodel_delete(sender, instance, **kwargs):
     # Pass false so FileField doesn't save the model.
     try:
