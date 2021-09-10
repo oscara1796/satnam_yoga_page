@@ -3,19 +3,20 @@
 
 {% block head_content %}
 <title>horarios</title>
+<link rel="stylesheet" href="{% static 'css/horarios.css' %}">
 {% endblock %}
 
 {% block container %}
-  <div class="container">
+  <div id="horarios" class="container">
     {% for schedule in schedules %}
       <div class="schedule">
           <h2>{{schedule.name}}</h2>
-          <figure>
+          <figure class="sched_img_wrapper">
             <img src="{{schedule.image.url}}" alt="Horario">
           </figure>
       </div>
     {% endfor %}
-    <div class="contact_info">
+    <div class="sched_contact_info">
         <h2>Contáctanos</h2>
         <p>Tel:+52 33-1418-3347</p>
         <p>Email: satnamyogajal@hotmail.com</p>
