@@ -606,7 +606,7 @@ body{
 }
 
 .category_element:hover li{
-  color: #FFFFFF;
+  color: gray;
 }
 
 .video_container{
