@@ -1,0 +1,42 @@
+{% load static %}
+{% if video %}
+  {% if request.user.is_authenticated and subscription.status == "active" or request.user.is_authenticated and subscription.status == "suspended"  %}
+    <h3 class="mt-2 mb-1">{{video.title}}</h3>
+    <!-- <video  id="video" width="320" height="240" controls controlsList="nodownload">
+     <source src="{{video.upload.url}}" type="video/mp4">
+    </video> -->
+    {{video.upload|safe}}
+    <div class="video_description">{{video.description|safe}}</div>
+  {% else %}
+      {% if request.user.is_authenticated  or request.user.is_anonymous %}
+      <h3 class="mt-2 mb-2">{{video.title}}</h3>
+        {% if video.free_seen == True %}
+          <!-- <video  id="video" width="320" height="240" controls controlsList="nodownload">
+           <source src="{{video.upload.url}}" type="video/mp4">
+          </video> -->
+          {{video.upload|safe}}
+          <div class="video_description">{{video.description|safe}}</div>
+        {% else %}
+          <div class="video_list_img_container">
+              <img src="{% if video.image %} {{video.image.url}}{% else %}{% static "img/video-placeholder.png" %}{% endif %}" alt="" style="width:100%; filter: brightness(40%);">
+              <p class="videos_list_center_text"><a href="{% url "payment_home" %}">Suscríbete</a> para poder reproducir el video</p>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+
+{% else %}
+  {% if category.video_set.all %}
+  <h3 class="mt-2 mb-2">{{category.video_set.all.first.title}}</h3>
+  {% if category.video_set.all.first.free_seen == True or subscription.status == "active" or subscription.status == "suspended" %}
+
+    {{category.video_set.all.first.upload|safe}}
+    <div class="video_description">{{category.video_set.all.first.description|safe}}</div>
+    {% else %}
+      <div class="video_list_img_container">
+          <img src="{% if category.video_set.all.first.image %} {{category.video_set.all.first.image.url}}{% else %}{% static "img/video-placeholder.png" %}{% endif %}" alt="" style="width:100%; filter: brightness(40%);">
+          <p class="videos_list_center_text"><a href="{% url "payment_home" %}">Suscríbete</a> para poder reproducir el video</p>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endif %}

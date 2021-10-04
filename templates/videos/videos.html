@@ -9,6 +9,45 @@
 
 
 {% block container %}
+<script type="text/javascript">
+  function chooseVideo(vid_id){
+    var videos = document.getElementsByClassName("video_container");
+         for (i = 0; i < videos.length; i++) {
+              if (videos[i].id  != vid_id) {
+                  videos[i].style.display= "none"
+              }
+         }
+    var video = document.getElementById("video:" + vid_id);
+    console.log(video);
+             if (video.style.display== "block") {
+                  video.style.display= "none"
+             } else{
+                video.style.display= "block"
+             }
+  }
+
+
+  function revealVideos(cat_id, fv_id){
+
+    var videos = document.getElementsByClassName("video_list_menu");
+         for (i = 0; i < videos.length; i++) {
+              if (videos[i].id  != cat_id) {
+                  videos[i].style.display= "none"
+
+              }
+         }
+
+    var video = document.getElementById("category:" + cat_id);
+             if (video.style.display== "flex") {
+                  video.style.display= "none"
+             } else{
+                video.style.display= "flex"
+             }
+    chooseVideo(fv_id)
+  }
+
+
+</script>
 
 <section id= "video_father_container" class="container video-list-container mb-4">
 
@@ -16,18 +55,22 @@
       <h3 class="">Categorías:</h3>
         <ul class="m-0 p-0" style="width: inherit">
           {% for category in categories_content %}
-          <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" onclick="make(event)" href="{% url 'category' category.id %}"><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a>
+          <!-- <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" onclick="make(event)" href="{% url 'category' category.id %}"><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a> -->
+          <a  class="category_element" style="text-decoration: none; color: #0d39a8; font-weight: bold; width: 100%;" onclick="revealVideos({{category.id}},{{category.video_set.all.first.id}})" ><li style="list-style-type: none;; text-align: center" class="list-group-item"> {{category.name}}</li></a>
           <!-- video  -->
-            <div  id="{{category.id}}" class="video_list_menu" >
-                <div class="video_container">
-                  {% include "videos/video_card.html" %}
-                </div>
+            <div  id="category:{{category.id}}" class="video_list_menu" >
+                {% for video in category.video_set.all %}
+                    <div id="video:{{video.id}}" class="video_container">
+                      {% include "videos/video_card2.html" %}
+                    </div>
+                {% endfor %}
                 <div class="" id="Video_list_displayer">
                     <hr id="video_list_line">
                       <ul style="width: 100%;">
 
                         {% for video in category.video_set.all %}
-                        <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" href="{% url 'video_id_show' category.id video.id %}">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li>
+                        <!-- <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" href="{% url 'video_id_show' category.id video.id %}">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li> -->
+                        <li style="list-style-type: none; display: flex; align-items:center"> <i class="fa fa-circle" style="font-size: 8px; margin-right: 5px;" aria-hidden="true"></i><a style="text-decoration: none; margin-right: 5px;" onclick="chooseVideo({{video.id}})">{{video.title}}</a>{% if  video.free_seen == True %} Video gratis {% endif %}</li>
                         {% endfor %}
                       </ul>
                 </div>
@@ -40,34 +83,7 @@
 
 </section>
 
-<script type="text/javascript">
-  window.onload = function() {
 
-    var videos = document.getElementsByClassName("video_list_menu");
-         for (i = 0; i < videos.length; i++) {
-             if (videos[i].id == {{category.id}} ) {
-                  videos[i].style.display= "flex"
-             } else{
-                videos[i].style.display= "none"
-             }
-         }
-
-  }
-  // console.log("hola")
-  // var video_parent = document.getElementById("video_father_container");
-  // console.log(video_parent)
-  // var children= video_parent.children
-  // var video_list_menu=  children[1]
-  // var video_container = video_list_menu.children[0]
-  // if(video_container.children.length == 0){
-  //
-  //   video_list_menu.style.display = "none"
-  // }
-
-
-
-
-</script>
 
 
 {% endblock %}
