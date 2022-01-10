@@ -400,7 +400,7 @@ body{
 /* ONLINE CLASES */
 
 .online_clases{
-  background-image: linear-gradient(to right, rgba(44, 80, 199, 1.0), rgba(0, 0, 0, 0)), url('../img/online_clasess.png');
+  background-image: linear-gradient(to right, rgba(44, 80, 199, 1.5), rgba(0, 0, 0, 0)), url('../img/online_clasess.png');
   background-size: cover;
   background-repeat: no-repeat;
   height: 70vh;

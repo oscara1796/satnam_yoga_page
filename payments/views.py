@@ -20,51 +20,51 @@ import pytz
 
 
 
-def get_paypal_token():
-    """
-    Obtenemos el token de paypal de nuestra cuenta
-    """
-    credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET_ID)
-    encode_credential = base64.b64encode(credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
-    headers = {
-    "Authorization": ("Basic %s" % encode_credential),
-    'Accept': 'application/json',
-    'Accept-Language': 'en_US',
-    }
-    param = {
-    'grant_type': 'client_credentials',
-    }
-    r = requests.post(settings.URL_PAYPAL_TOKEN, headers=headers, data=param).json()
-    return  r['access_token']
-
-def paypal_handle(request):
-    """
-    Manejamos las peticiones POST cuando se sube el formulario de paypal_form y añadimos el profile
-    OBJ request
-    """
-    if request.method == 'POST':
-        # print(request.POST)
-        user = request.user
-        session = request.POST.get('details')
-        session = json.loads(session)
-        # print('session: ', str(session))
-        profile_exists= Profile.objects.filter(user=user).exists()
-        if not profile_exists:
-            # print(session['subscriptionID'])
-            # print(session['plan_id'])
-            Profile.objects.create(
-                user=user,
-                paypalSubscriptionId= session['subscriptionID'],
-                paypalPlanId= session['plan_id'],
-                active= statusChoices.ACTIVE,
-            )
-            return True
-        # else:
-        #     profile= Profile.objects.get(user=user)
-        #     profile.paypalSubscriptionId = stripe_subscription_id
-        #     profile.active = True
-        #     profile.save()
-    return False
+# def get_paypal_token():
+#     """
+#     Obtenemos el token de paypal de nuestra cuenta
+#     """
+#     credentials = "%s:%s" % (settings.PAYPAL_CLIENT_ID, settings.PAYPAL_SECRET_ID)
+#     encode_credential = base64.b64encode(credentials.encode('utf-8')).decode('utf-8').replace("\n", "")
+#     headers = {
+#     "Authorization": ("Basic %s" % encode_credential),
+#     'Accept': 'application/json',
+#     'Accept-Language': 'en_US',
+#     }
+#     param = {
+#     'grant_type': 'client_credentials',
+#     }
+#     r = requests.post(settings.URL_PAYPAL_TOKEN, headers=headers, data=param).json()
+#     return  r['access_token']
+#
+# def paypal_handle(request):
+#     """
+#     Manejamos las peticiones POST cuando se sube el formulario de paypal_form y añadimos el profile
+#     OBJ request
+#     """
+#     if request.method == 'POST':
+#         # print(request.POST)
+#         user = request.user
+#         session = request.POST.get('details')
+#         session = json.loads(session)
+#         # print('session: ', str(session))
+#         profile_exists= Profile.objects.filter(user=user).exists()
+#         if not profile_exists:
+#             # print(session['subscriptionID'])
+#             # print(session['plan_id'])
+#             Profile.objects.create(
+#                 user=user,
+#                 paypalSubscriptionId= session['subscriptionID'],
+#                 paypalPlanId= session['plan_id'],
+#                 active= statusChoices.ACTIVE,
+#             )
+#             return True
+#         # else:
+#         #     profile= Profile.objects.get(user=user)
+#         #     profile.paypalSubscriptionId = stripe_subscription_id
+#         #     profile.active = True
+#         #     profile.save()
+#     return False
 
 def HomePagePaymentView(request):
     """
@@ -73,18 +73,12 @@ def HomePagePaymentView(request):
     para traer la un token y traer la info del plan
     OBJ request
     """
-    # print(request.user)
-    red_value=paypal_handle(request)
-    if red_value:
-        return redirect('update_profile')
     stripe.api_key = settings.STRIPE_SECRET_KEY
     month_subs= stripe.Product.retrieve(settings.STRIPE_PRODUCT_ID)
     month_subs_price= stripe.Price.retrieve(settings.STRIPE_PRICE_ID)
     year_subs= stripe.Product.retrieve(settings.STRIPE_PRODUCT_YEAR_ID)
     year_subs_price= stripe.Price.retrieve(settings.STRIPE_PRICE_YEAR_ID)
-    paypal_plans = Paypal.objects.all()
     try:
-        # Retrieve the subscription & product
         customer = Profile.objects.get(user=request.user)
         product = None
         subscription = None
@@ -97,39 +91,16 @@ def HomePagePaymentView(request):
             else:
                 product['price'] = round(float(year_subs_price.unit_amount /100),2)
                 product['type'] = "Subscripción anual"
-        elif customer.paypalSubscriptionId and customer.paypalPlanId:
-            access_token = get_paypal_token()
-            headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-            url = f'https://api-m.paypal.com/v1/billing/plans/{customer.paypalPlanId}'
-            r = requests.get(url, headers=headers).json()
-            current_plan = None
-            for plan in paypal_plans:
-                if plan.paypalPlanId ==  customer.paypalPlanId:
-                    current_plan = plan
-            subs_price =r['billing_cycles'][0]['pricing_scheme']['fixed_price']
-
-            product= {'name': r['name'], 'price': subs_price['value'], 'type': current_plan.name, 'description': current_plan.description, 'images': [current_plan.image.url]}
-            # print(current_plan.image.url)
-            url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
-            subscription = requests.get(url, headers=headers).json()
-
-
         list_products= [product]
-        # Feel free to fetch any additional data from 'subscription' or 'product'
-        # https://stripe.com/docs/api/subscriptions/object
-        # https://stripe.com/docs/api/products/object
         return render(request, 'payments/payment_home.html', {
             'subscription': subscription,
             'list_products':list_products,
             'profile': customer
         })
-
     except Profile.DoesNotExist :
-
         product_1= {"id":"but_1","price_id":month_subs_price.id,'name': month_subs.name, 'description': month_subs.description, 'price':round(float(month_subs_price.unit_amount /100),2), 'type': "Subscripción mensual", 'images': month_subs.images}
         product_2= {"id":"but_2","price_id":year_subs_price.id,'name': year_subs.name, 'description': year_subs.description, 'price':round(float(year_subs_price.unit_amount /100),2), 'type': "Subscripción anual" , 'images': year_subs.images}
         list_products= [product_1,product_2]
-
         return render(request, 'payments/payment_home.html',{'list_products':list_products, 'profile': Profile.DoesNotExist, 'paypal_plans': paypal_plans})
 
 
