@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from videos.models import Video, Category
 from users.models import Profile
-from payments.views import get_paypal_token
 
 #Video cipher vdocipher
 
@@ -51,15 +50,8 @@ def category(request, category_id ):
     subscription= None
     try:
         customer = Profile.objects.get(user=request.user)
-        if customer.paypalSubscriptionId:
-            access_token = get_paypal_token()
-            headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-            url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
-            subscription = requests.get(url, headers=headers).json()
-            subscription['status'] =  subscription['status'].lower()
-        else:
-            stripe.api_key = settings.STRIPE_SECRET_KEY
-            subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content, 'subscription': subscription})
     except Exception as e:
         return render(request, "videos/videos.html", {"category": category, 'categories_content': categories_content, 'video_content': video_content})

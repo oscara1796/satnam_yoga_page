@@ -142,61 +142,9 @@ def Cancelled_or_Reactivate_SubscriptionView(request):
         })
 
 
-def suspend_paypal_View(request):
-
-    # Retrieve the subscription & product
-    customer = Profile.objects.get(user=request.user)
-    access_token = get_paypal_token()
-
-    headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-    url2 = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/suspend'
-    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
-    subscription = requests.get(url, headers=headers).json()
-    date_format = '%Y-%m-%dT%H:%M:%SZ'
-    last_payment = subscription["billing_info"]["last_payment"]["time"]
-    last_payment= datetime.strptime(last_payment, date_format)
-    last_payment = pytz.utc.localize(last_payment)
-    # print("THIS IS LAST DATE PAYMENT: ", last_payment)
-    paypal_plan = subscription["plan_id"]
-    paypal_plans = Paypal.objects.all()
-    post_req= requests.post(url2, headers=headers)
-    # print("post_request ", post_req )
-    customer.active = statusChoices.TRIAL
-    for plan in paypal_plans:
-        if plan.SKU == 'PLAN_ANUAL':
-            customer.paypal_cancel_date= last_payment + timezone.timedelta(days=365)
-        elif plan.SKU == 'PLAN_MENSUAL':
-            customer.paypal_cancel_date= last_payment + timezone.timedelta(days=30)
-    # print("THIS IS update DATE PAYMENT in profile: ", last_payment + timezone.timedelta(days=365))
-    customer.save()
-    subscription = requests.get(url, headers=headers).json()
-    timestamp= customer.paypal_cancel_date
 
 
-    return render(request, 'payments/cancelled.html', {
-        'subscription': subscription,
-        'time_left':timestamp
-    })
 
-def reactivate_paypal_View(request):
-
-    # Retrieve the subscription & product
-    customer = Profile.objects.get(user=request.user)
-    access_token = get_paypal_token()
-
-    headers = { 'Content-Type': 'application/json', 'Authorization': f'Bearer {access_token}' }
-    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}/activate'
-
-    requests.post(url, headers=headers)
-    customer.active = statusChoices.ACTIVE
-    customer.paypal_cancel_date= None
-    customer.save()
-    timestamp= customer.paypal_cancel_date
-
-    url = f'https://api-m.paypal.com/v1/billing/subscriptions/{customer.paypalSubscriptionId}'
-    subscription = requests.get(url, headers=headers).json()
-
-    return redirect('payment_home')
 
 
 
@@ -332,49 +280,4 @@ def stripe_webhook(request):
             print('CUSTOMER CANCELLED STRIPE: ', profile)
             profile.delete();
 
-    return HttpResponse(status=200)
-
-
-# PAYPAL  event listener
-@require_POST
-@csrf_exempt
-def webhook_paypal(request):
-    print('WEBHOOK WORK')
-    print(request.headers)
-    transmission_id= request.headers['Paypal-Transmission-Id']
-    timestamp= request.headers['Paypal-Transmission-Time']
-    webhook_id= settings.PAYPAL_WEEBHOOK_ID
-    event_body= request.body.decode('utf-8')
-    cert_url = request.headers['Paypal-Cert-Url']
-    auth_algo = request.headers['Paypal-Auth-Algo']
-    actual_signature = request.headers['Paypal-Transmission-Sig']
-    response = WebhookEvent.verify(transmission_id, timestamp, webhook_id, event_body, cert_url, actual_signature, auth_algo)
-    print(response)
-    if response:
-        print('RESPONSE WORKS')
-        obj = json.loads(request.body)
-        event_type = obj.get('event_type')
-        resource= obj.get('resource')
-
-        if event_type == 'PAYMENT.SALE.COMPLETED':
-            pass
-            # print(resource)
-            # subs_id_paypal = resource['billing_agreement_id']
-            # print('Se pago una suscripción al final y funciona esta madre')
-        if event_type == 'BILLING.SUBSCRIPTION.SUSPENDED':
-            # print(resource)
-            subs_id_paypal = resource['id']
-            profiles = Profile.objects.filter(paypalSubscriptionId=subs_id_paypal)
-            profile = profiles[0]
-            if profile.paypal_cancel_date== None:
-                profile.paypal_cancel_date = timezone.now() - timezone.timedelta(days=2)
-                profile.active = statusChoices.TRIAL
-                profile.save()
-                # print('su date es none ')
-            # print('PROFILE: ', profile)
-            # print('Subscripción suspendida ')
-        if event_type == 'BILLING.SUBSCRIPTION.ACTIVATED':
-            pass
-            # print(resource)
-            # print('Subscripción activada ')
     return HttpResponse(status=200)
