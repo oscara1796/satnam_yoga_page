@@ -101,7 +101,7 @@ def HomePagePaymentView(request):
         product_1= {"id":"but_1","price_id":month_subs_price.id,'name': month_subs.name, 'description': month_subs.description, 'price':round(float(month_subs_price.unit_amount /100),2), 'type': "Subscripción mensual", 'images': month_subs.images}
         product_2= {"id":"but_2","price_id":year_subs_price.id,'name': year_subs.name, 'description': year_subs.description, 'price':round(float(year_subs_price.unit_amount /100),2), 'type': "Subscripción anual" , 'images': year_subs.images}
         list_products= [product_1,product_2]
-        return render(request, 'payments/payment_home.html',{'list_products':list_products, 'profile': Profile.DoesNotExist, 'paypal_plans': paypal_plans})
+        return render(request, 'payments/payment_home.html',{'list_products':list_products, 'profile': Profile.DoesNotExist})
 
 
 def SuccessPaymentView(request):
@@ -158,7 +158,8 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request):
     if request.method == 'GET':
-        domain_url = 'https://www.satnamyogaestudio.com/'
+        # domain_url = 'https://www.satnamyogaestudio.com/'
+        domain_url = 'http://localhost:8000/'
         stripe.api_key = settings.STRIPE_SECRET_KEY
         try:
             checkout_session = stripe.checkout.Session.create(
@@ -219,7 +220,7 @@ def stripe_webhook(request):
     # Handle the checkout.session.completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        # print(session)
+        print(session)
 
         # Fetch all the required data from session
         client_reference_id = session.get('client_reference_id')
@@ -279,5 +280,19 @@ def stripe_webhook(request):
             print(profile.active)
             print('CUSTOMER CANCELLED STRIPE: ', profile)
             profile.delete();
+    if event['type'] == "payment_intent.succeeded":
+        intent = event['data']['object']
+        print("intent ", intent)
+        print("Succeeded: ", intent['id'])
+        stripe_customer_id = intent.get('customer')
+        profile_exists= Profile.objects.filter(stripeCustomerId=stripe_customer_id).exists()
+
+        if profile_exists:
+            profile= Profile.objects.get(stripeCustomerId=stripe_customer_id)
+            payment_intent= stripe.PaymentIntent.modify(
+              intent['id'],
+              receipt_email=profile.user.email
+            )
+            print("payment_intent ",payment_intent )
 
     return HttpResponse(status=200)

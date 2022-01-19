@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 import requests
 
-from payments.views import get_paypal_token
+# from payments.views import get_paypal_token
 from users.models import  statusChoices
 from django.utils import timezone
 
