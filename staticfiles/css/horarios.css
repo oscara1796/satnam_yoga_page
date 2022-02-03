@@ -1,0 +1,50 @@
+
+
+
+
+
+
+#horarios{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sched_contact_info{
+  margin-top: 5vh;
+  margin-bottom: 3vh;
+  align-self: flex-start;
+  padding-left: 10%;
+  font-size: 24px;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  #horarios{
+    padding: 0;
+  }
+
+
+  .sched_img_wrapper{
+        width: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+
+  }
+  .sched_hr{
+    color: black;
+    height: 2px;
+  }
+
+  .sched_img_wrapper img{
+        width: 100%;
+
+  }
+  .schedule{
+    display: flex;
+    flex-direction: column;
+  }
+
+}
