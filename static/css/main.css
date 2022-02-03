@@ -580,6 +580,31 @@ body{
 
 /* video_list */
 
+#loader {
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #194582;
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.center {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
 .video-list-container{
   display: flex;
   flex-direction: column;
@@ -830,4 +855,15 @@ body{
 .errorlist li{
 
   color: white;
+}
+
+/* CANCELLED SECTION  */
+
+.cancelled_info{
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 50vh !important;
 }

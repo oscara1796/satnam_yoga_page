@@ -2,6 +2,7 @@ from django.test import SimpleTestCase, Client
 from django.urls import reverse, resolve
 from payments.views import *
 
+
 # Create your tests here.
 
 

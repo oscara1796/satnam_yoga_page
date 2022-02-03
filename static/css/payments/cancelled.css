@@ -1,0 +1,15 @@
+
+
+#time_left{
+  font-weight: bold;
+
+}
+
+.cancelled_info{
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 50vh !important;
+}

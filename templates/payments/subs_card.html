@@ -30,6 +30,7 @@
         <p>Tu periodo termina el {{profile.paypal_cancel_date}}</p>
         <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "reacti_paypal_sub" %}'>Reactivar subscripción</a></button>
         {% else %}
+        <p> Tu subscripción se cancela el <span class="fw-bold"">{{time_left}}</span></p>
           <p>Si tu periodo de pago no ha terminado puedes volver a activar tu subscripción para poder continuar con los beneficios</p>
           <button type="submit" class="mb-4 btn btn-primary" ><a style="color:white; text-decoration: none;" href='{% url "cancelled_subscription" %}'>Reactivar subscripción</a></button>
         {% endif %}

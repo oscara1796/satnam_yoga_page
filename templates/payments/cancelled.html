@@ -3,19 +3,20 @@
 {% load static %}
 {% block head_content %}
 
-<title>Django + Stripe Checkout cancelled</title>
+<title> Sat nam yoga cancelled</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
 <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<link rel="stylesheet" href="{% static "css/payments/cancelled.css" %}">
 {% endblock %}
 
 {% block container %}
 
-<section class="section">
+<section class="section" id="cancelled_section">
 
-  <div class="container">
+  <div class="container cancelled_info">
     {% if subscription.cancel_at_period_end == True or subscription.status == 'SUSPENDED' %}
     <p>Tu subscripción ha sido cancelada.</p>
-    <p> Puede visualizar el contenido hasta el termino de su subscripción {{time_left}}</p>
+    <p> Puede visualizar el contenido hasta el termino de su subscripción <span id="time_left">{{time_left}}</span></p>
     {% else %}
     <p>Tu pago no se ha podido procesar </p>
     <p>Favor de corroborar información </p>

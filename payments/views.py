@@ -78,12 +78,14 @@ def HomePagePaymentView(request):
     month_subs_price= stripe.Price.retrieve(settings.STRIPE_PRICE_ID)
     year_subs= stripe.Product.retrieve(settings.STRIPE_PRODUCT_YEAR_ID)
     year_subs_price= stripe.Price.retrieve(settings.STRIPE_PRICE_YEAR_ID)
+    timestamp= None
     try:
         customer = Profile.objects.get(user=request.user)
         product = None
         subscription = None
         if customer.stripeSubscriptionId:
             subscription = stripe.Subscription.retrieve(customer.stripeSubscriptionId)
+            timestamp= datetime.fromtimestamp(subscription.current_period_end)
             product = stripe.Product.retrieve(subscription.plan.product)
             if product.id == month_subs.id:
                 product['price'] = round(float(month_subs_price.unit_amount /100),2)
@@ -95,7 +97,8 @@ def HomePagePaymentView(request):
         return render(request, 'payments/payment_home.html', {
             'subscription': subscription,
             'list_products':list_products,
-            'profile': customer
+            'profile': customer,
+             'time_left':timestamp
         })
     except Profile.DoesNotExist :
         product_1= {"id":"but_1","price_id":month_subs_price.id,'name': month_subs.name, 'description': month_subs.description, 'price':round(float(month_subs_price.unit_amount /100),2), 'type': "Subscripción mensual", 'images': month_subs.images}
@@ -116,6 +119,7 @@ def Cancelled_or_Reactivate_SubscriptionView(request):
     # Retrieve the subscription & product
     stripe_customer = Profile.objects.get(user=request.user)
     stripe.api_key = settings.STRIPE_SECRET_KEY
+    # traemos subscripcion del cliente
     subscription = stripe.Subscription.retrieve(stripe_customer.stripeSubscriptionId)
     if subscription.cancel_at_period_end == True:
         stripe.Subscription.modify(
